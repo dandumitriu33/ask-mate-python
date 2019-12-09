@@ -4,53 +4,41 @@
 
 {% block body %}
 
-<h1>Question {{ question_id }}</h1>
+<h1 style="text-align: center">Question {{ question_id }}</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>id</th>
-                <th>submitted</th>
-                <th>views</th>
-                <th>votes</th>
-                <th>subject</th>
-                <th>details</th>
-                <th>images</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                {% for i in question %}
-                    <td>{{ question[i] }}</td>
-                {% endfor %}
-            </tr>
-        </tbody>
-    </table>
+    <p style="text-align: center">
+        <img src="/static/up.png" alt="upvote arrow" height="12">
+        {{ question['vote_number'] }}
+        <img src="/static/down.png" alt="upvote arrow" height="12">
+        <span>  </span>
+        {{ question['title'] }}<br>
+        <font size="1">Viewed {{ question['view_number'] }} times.
+        Submitted at: {{ question['submission_time'] }}</font>
+    </p>
+    <p style="text-align: center">
+        Details:<br>
+        {{ question['message'] }}<span>  </span>
 
+    </p>
+    <hr>
     {% if answers == [] %}
-        <p>This question has no answers yet.</p>
+        <p style="text-align: center">There are no answers at this time.</p>
     {% else %}
-        <table>
-        <thead>
-            <tr>
-                <th>id</th>
-                <th>submitted</th>
-                <th>votes</th>
-                <th>question id</th>
-                <th>response</th>
-                <th>images</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for answer in answers %}
-            <tr>
-                {% for i in answer %}
-                    <td>{{ answer[i] }}</td>
-                {% endfor %}
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        {% for answer in answers %}
+            <p style="text-align: center">
+                <img src="/static/up.png" alt="upvote arrow" height="12">
+                {{ answer['vote_number'] }}
+                <img src="/static/down.png" alt="upvote arrow" height="12">
+                <span>  </span>
+                {{ answer['message'] }}<span>  </span>
+                <span> <font size="1">Submitted at: {{ answer['submission_time'] }}</font></span><br>
+                {% if answer['image'] != '' %}
+                    <p>img</p>
+                {% endif %}
+            </p>
+            <hr>
+        {% endfor %}
+
 
     {% endif %}
 
