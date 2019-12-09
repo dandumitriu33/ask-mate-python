@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block head %}{% endblock head %}
+
+{% block body %}
+
+<h1>Question {{ question_id }}</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>submitted</th>
+                <th>views</th>
+                <th>votes</th>
+                <th>subject</th>
+                <th>details</th>
+                <th>images</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for i in question %}
+                    <td>{{ question[i] }}</td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+
+    {% if answers == [] %}
+        <p>This question has no answers yet.</p>
+    {% else %}
+        <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>submitted</th>
+                <th>votes</th>
+                <th>question id</th>
+                <th>response</th>
+                <th>images</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for answer in answers %}
+            <tr>
+                {% for i in answer %}
+                    <td>{{ answer[i] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% endif %}
+
+{% endblock body%}
