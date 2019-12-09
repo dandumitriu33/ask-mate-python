@@ -1,0 +1,46 @@
+body, html {
+    background-color: darkgray;
+    margin: 0;
+    font-family: "Ubuntu Mono";
+}
+
+.content {
+    margin: 0 auto;
+    width: 95%;
+}
+
+table, td, th {
+    border: 1px solid black;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    height: 30px;
+}
+
+td {
+    text-align: center;
+    padding: 5px;
+}
+
+form {
+    margin-top: 20px;
+}
+
+#content {
+    width: 70%;
+}
+
+.form {
+    text-align: center;
+}
+
+input[type="text"], textarea {
+
+  background-color : #d1d1d1;
+
+}
