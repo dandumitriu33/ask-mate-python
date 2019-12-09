@@ -6,7 +6,13 @@
 
 {% block body %}
 
-<h1>Add Question Cine Esti ?</h1>
+<h1>Add Question Page</h1>
 
-
+    <form method="POST">
+        <p>Tiltle</p>
+        <input type="text" name="title" id="title" required="required">
+        <p>Question</p>
+        <textarea name="message" rows="6" cols="50" required="required"></textarea><br>
+        <input type="submit" value="Add text">
+    </form>
 {% endblock body%}
