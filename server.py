@@ -9,5 +9,12 @@ def route_list():
     return render_template('list.html')
 
 
+@app.route('/add-question')
+def add_question():
+    return render_template('/add-question.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
+
+
