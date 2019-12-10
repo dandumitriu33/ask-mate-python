@@ -1,6 +1,5 @@
 import csv
 import os
-import time
 
 
 DATA_FILE_PATH = os.getenv('DATA_FILE_PATH') if 'DATA_FILE_PATH' in os.environ else 'sample_data/question.csv'
@@ -15,8 +14,6 @@ def read_answers():
             data_list.append(dict(row))
     return data_list
 
-
-# This function reads the CSV file
 
 def get_data():
     data = []
