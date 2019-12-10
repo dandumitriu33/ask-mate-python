@@ -1,6 +1,16 @@
 import csv
 import time
 
+
+def read_answers():
+    data_list = []
+    with open('sample_data/answer.csv', 'r',newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            data_list.append(dict(row))
+    return data_list
+
+
 # This function reads the CSV file
 
 def get_data():
@@ -18,3 +28,4 @@ def write_data(new_data, fieldnames):
         for line in new_data:
             csv_write.writerow({'id': line['id'], 'submission_time': line['submission_time'], 'view_number': line['view_number'],
                                  'vote_number': line['vote_number'], 'title': line['title'], 'message': line['message'], 'image': line['image']})
+

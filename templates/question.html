@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block head %}{% endblock head %}
+
+{% block body %}
+
+<h1 style="text-align: center">Question {{ question_id }}</h1>
+
+    <p style="text-align: center">
+        <img src="/static/up.png" alt="upvote arrow" height="12">
+        {{ question['vote_number'] }}
+        <img src="/static/down.png" alt="upvote arrow" height="12">
+        <span>  </span>
+        {{ question['title'] }}<br>
+        <font size="1">Viewed {{ question['view_number'] }} times.
+        Submitted at: {{ question['submission_time'] }}</font>
+    </p>
+    <p style="text-align: center">
+        Details:<br>
+        {{ question['message'] }}<span>  </span>
+
+    </p>
+    <hr>
+    {% if answers == [] %}
+        <p style="text-align: center">There are no answers at this time.</p>
+    {% else %}
+        {% for answer in answers %}
+            <p style="text-align: center">
+                <img src="/static/up.png" alt="upvote arrow" height="12">
+                {{ answer['vote_number'] }}
+                <img src="/static/down.png" alt="upvote arrow" height="12">
+                <span>  </span>
+                {{ answer['message'] }}<span>  </span>
+                <span> <font size="1">Submitted at: {{ answer['submission_time'] }}</font></span><br>
+                {% if answer['image'] != '' %}
+                    <p>img</p>
+                {% endif %}
+            </p>
+            <hr>
+        {% endfor %}
+
+
+    {% endif %}
+
+{% endblock body%}

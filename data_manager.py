@@ -1,6 +1,23 @@
-import csv
-import time
 import connection
+import time
+
+
+def get_question(question_id):
+    questions_list = connection.get_data()
+    for question in questions_list:
+        if question['id'] == question_id:
+            return question
+    return 'The question does not exist.'
+
+
+def get_answers(question_id):
+    given_answers = []
+    answers_list = connection.read_answers()
+    for answer in answers_list:
+        if answer['question_id'] == question_id:
+            given_answers.append(answer)
+    return given_answers
+
 
 # It reads the content of the question.csv file
 
