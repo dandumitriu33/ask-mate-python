@@ -4,7 +4,10 @@
 
 {% block body %}
 
-<h1>List page</h1>
+<h1>ASK MATE</h1>
+
+    <a href="{{ url_for('add_question') }}">Add new question</a><br><br>
+
 <table>
         <thead>
             <tr>
@@ -32,7 +35,11 @@
             {% for question in questions %}
                 <tr>
                     {% for i in question %}
-                        <td>{{ question[i] }}</td>
+                        {% if i == 'title' %}
+                            <td><a href="{{ url_for('display_question', question_id=question['id']) }}">{{ question[i] }}</a></td>
+                        {% else %}
+                            <td>{{ question[i] }}</td>
+                        {% endif %}
                     {% endfor %}
                 </tr>
             {% endfor %}

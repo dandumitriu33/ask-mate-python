@@ -1,5 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
-import connection
+from flask import Flask, render_template, request, redirect
 import data_manager
 
 
