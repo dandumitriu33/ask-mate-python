@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
-{% block head %}{% endblock head %}
+{% block head %}
+    <title> List page </title>
+{% endblock head %}
 
 {% block body %}
 
@@ -9,7 +11,10 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Submission time</th>
+                <th>Submission time
+                    <a href="{{ url_for('route_list', order_by='submission time', order_direction='desc') }}">v</a>
+                    <a href="{{ url_for('route_list', order_by='submission time', order_direction='asc') }}">^</a>
+                </th>
                 <th>View number</th>
                 <th>Vote number</th>
                 <th>Title</th>

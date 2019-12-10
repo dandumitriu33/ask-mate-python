@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+
+<title>New answer</title>
+
+{% endblock %}
+
+
+
+{% block body %}
+
+    <form action="/question/{{ question_id }}" method="POST">
+        <label>Question {{ question_id }}</label>
+        <input type="text" name="question_id" value="{{ question_id }}" disabled>
+        <label>New answer:</label>
+        <textarea name="post_answer" rows="5" cols="20"></textarea>
+        <input type="submit" value="Post answer">
+
+    </form>
+
+
+{% endblock %}

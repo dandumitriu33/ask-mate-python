@@ -1,5 +1,6 @@
 import connection
 import time
+import util
 
 
 def sort_questions(order_key='submission_time', reversed=True):
@@ -52,4 +53,18 @@ def add_question_table(question):
         break
 
     connection.write_data(current_data, fieldnames)
+
+
+def add_answer_to_file(answer, question_id):
+    answer_dictionary = {}
+    answer_dictionary['id'] = util.generate_answer_id()
+    answer_dictionary['submission_time'] = create_time()
+    answer_dictionary['vote_number'] = 0
+    answer_dictionary['question_id'] = question_id
+    answer_dictionary['message'] = answer
+    answer_dictionary['image'] = ''
+    answers_list = connection.read_answers()
+    answers_list.append(answer_dictionary)
+    connection.write_answers(answers_list)
+
 
