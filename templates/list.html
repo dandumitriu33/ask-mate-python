@@ -5,6 +5,28 @@
 {% block body %}
 
 <h1>List page</h1>
+<table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Submission time</th>
+                <th>View number</th>
+                <th>Vote number</th>
+                <th>Title</th>
+                <th>Message</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for question in questions %}
+                <tr>
+                    {% for i in question %}
+                        <td>{{ question[i] }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+</table>
 
     <p>{{ data_list }}</p>
 

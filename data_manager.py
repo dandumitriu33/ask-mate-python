@@ -2,6 +2,12 @@ import connection
 import time
 
 
+def sort_questions(order_key='submission_time', reversed=True):
+    questions = connection.get_all_questions(convert_linebreaks=True)
+    sorted_questions = sorted(questions, key = lambda i: i[order_key], reverse=reversed)
+    return sorted_questions
+
+
 def get_question(question_id):
     questions_list = connection.get_data()
     for question in questions_list:
@@ -17,9 +23,6 @@ def get_answers(question_id):
         if answer['question_id'] == question_id:
             given_answers.append(answer)
     return given_answers
-
-
-# It reads the content of the question.csv file
 
 
 def get_data():
@@ -49,3 +52,4 @@ def add_question_table(question):
         break
 
     connection.write_data(current_data, fieldnames)
+

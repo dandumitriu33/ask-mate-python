@@ -1,5 +1,10 @@
 import csv
+import os
 import time
+
+
+DATA_FILE_PATH = os.getenv('DATA_FILE_PATH') if 'DATA_FILE_PATH' in os.environ else 'sample_data/question.csv'
+DATA_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
 
 
 def read_answers():
@@ -28,4 +33,5 @@ def write_data(new_data, fieldnames):
         for line in new_data:
             csv_write.writerow({'id': line['id'], 'submission_time': line['submission_time'], 'view_number': line['view_number'],
                                  'vote_number': line['vote_number'], 'title': line['title'], 'message': line['message'], 'image': line['image']})
+
 
