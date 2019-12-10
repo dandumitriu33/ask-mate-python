@@ -21,5 +21,17 @@ def display_question(question_id):
                            question_id=question_id)
 
 
+@app.route('/add-question', methods=['GET', 'POST'])
+def add_question():
+    if request.method == 'POST':
+        new_data = request.form
+        data_manager.add_question_table(new_data)
+        return redirect('/')
+    else:
+        return render_template('/add-question.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
+
+
