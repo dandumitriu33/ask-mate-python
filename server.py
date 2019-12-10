@@ -5,6 +5,7 @@ import data_manager
 
 app = Flask(__name__)
 
+LAST_VISITED_QUESTION = 0
 
 @app.route('/')
 @app.route('/list')
@@ -41,9 +42,11 @@ def new_answer(question_id):
 
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
 def display_question(question_id):
+    global LAST_VISITED_QUESTION
     if request.method == 'GET':
         question = data_manager.get_question(question_id)
         answers = data_manager.get_answers(question_id)
+        LAST_VISITED_QUESTION = question_id
         return render_template('question.html',
                                question=question,
                                answers=answers,
@@ -52,10 +55,50 @@ def display_question(question_id):
         data_manager.add_answer_to_file(request.form['post_answer'], question_id)
         question = data_manager.get_question(question_id)
         answers = data_manager.get_answers(question_id)
+        LAST_VISITED_QUESTION = question_id
         return render_template('question.html',
                                question=question,
                                answers=answers,
                                question_id=question_id)
+
+
+@app.route('/answer/<answer_id>/delete', methods=['GET'])
+def delete_answer(answer_id):
+    answers = connection.read_answers()
+    i = 0
+    while i < len(answers):
+        if answers[i]['id'] == answer_id:
+            question_id = answers[i]['question_id']
+            answers.pop(i)
+        i += 1
+    connection.write_answers(answers)
+    question = data_manager.get_question(question_id)
+    answers = data_manager.get_answers(question_id)
+    return render_template('question.html',
+                           question=question,
+                           answers=answers,
+                           question_id=question_id)
+    # return render_template('delete_answer.html',
+    #                        answer_id=answer_id)
+
+
+# does nothing
+# def confirmed_answer_delete():
+#     answer_id = request.args.get(key='answer_id')
+#     answers = connection.read_answers()
+#     i = 0
+#     while i < len(answers):
+#         if answers[i]['id'] == answer_id:
+#             question_id = answers[i]['question_id']
+#             answers.pop(i)
+#         i += 1
+#     connection.write_answers(answers)
+#     question = data_manager.get_question(question_id)
+#     answers = data_manager.get_answers(question_id)
+#     return render_template('question.html',
+#                            question=question,
+#                            answers=answers,
+#                            question_id=question_id)
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
