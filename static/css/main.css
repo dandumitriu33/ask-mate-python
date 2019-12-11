@@ -8,6 +8,32 @@ h1 {
     text-align: center;
 }
 
+.navbar {
+    margin-left: 3%;
+}
+
+
+/* unvisited link */
+a:link {
+  color: black;
+}
+
+/* visited link */
+a:visited {
+  color: darkslateblue;
+}
+
+/* mouse over link */
+a:hover {
+  color: darkblue;
+}
+
+/* selected link */
+a:active {
+  color: darkblue;
+}
+
+
 .content {
     margin: 0 auto;
     width: 96%;
@@ -55,7 +81,21 @@ form li + li {
 }
 
 .button {
-    padding-left: 90px;
+    background-color: #CCC; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 10px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.button:hover {
+    background-color: gray;
 }
 
 button {
@@ -65,12 +105,19 @@ button {
     width: 70%;
 }
 
+.text_container{
+    margin-top: 3px;
+    margin-bottom: 3px;
+    border-radius: 10px;
+}
+
 .question_details{
     border: 1px solid #CCC;
     border-radius: 1em;
     margin: 0 auto;
     width: 70%;
     padding: 5px 10px;
+
 }
 
 .question_answer{

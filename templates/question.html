@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
-{% block head %}{% endblock head %}
+{% block head %}
+    <title>Question {{ question_id }}</title>
+{% endblock head %}
 
 {% block body %}
 
@@ -44,11 +46,12 @@
                         <a href="{{ url_for('delete_answer', answer_id=answer['id']) }}"><font size="1">delete</font></a>
 
                     </span>
+
                     {% if answer['image'] != '' %}
                         <p>img</p>
                     {% endif %}
                 </p>
-            </div>
+            </div><br>
 
         {% endfor %}
 
@@ -57,7 +60,7 @@
 
 
     <form action="{{ url_for('new_answer', question_id=question_id) }}" class="reply_button">
-        <input type="submit" value="Reply">
+        <input type="submit" value="Reply" class="button">
     </form>
 
 

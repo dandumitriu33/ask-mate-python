@@ -14,8 +14,11 @@
 
     {% block body %}{% endblock body %}
 
-    <div class="button">
-        <a href="{{ url_for('route_list') }}">Ask Mate Home</a>
+    <div class="navbar">
+        <p>
+        <a href="{{ url_for('route_list') }}" class="button">Ask Mate Home</a>
+        <a href="{{ url_for('add_question') }}" class="button">New Question</a><br><br>
+        </p>
     </div>
 
 </body>

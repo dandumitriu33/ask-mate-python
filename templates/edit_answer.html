@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <title>Edit answer {{ answer_id }}</title>
+    <title>Edit Answer {{ answer_id }}</title>
 {% endblock head %}
 
 
@@ -11,9 +11,9 @@
     <h1>Edit Answer</h1>
 
     <form action="/answer/{{ answer_id }}/edit" method="POST">
-        <label>Edit answer {{ answer_id }}</label><br>
-        <textarea name="message" rows="6" cols="50">{{ message }}</textarea>
-        <input type="submit" value="Submit edit">
+        <label>Edit Answer {{ answer_id }}</label><br>
+        <textarea name="message" rows="6" cols="50" class="text_container">{{ message }}</textarea>
+        <input type="submit" value="Edit Answer" class="button">
     </form>
 
 
