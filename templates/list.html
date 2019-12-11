@@ -14,20 +14,20 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Submission time
+                <th>Posted<br>
                     <a href="{{ url_for('route_list', order_by='submission time', order_direction='desc') }}">v</a>
                     <a href="{{ url_for('route_list', order_by='submission time', order_direction='asc') }}">^</a>
                 </th>
-                <th>View number
+                <th>Views<br>
                     <a href="{{ url_for('route_list', order_by='view number', order_direction='desc') }}">v</a>
                     <a href="{{ url_for('route_list', order_by='view number', order_direction='asc') }}">^</a></th>
-                <th>Vote number
+                <th>Votes<br>
                     <a href="{{ url_for('route_list', order_by='vote number', order_direction='desc') }}">v</a>
                     <a href="{{ url_for('route_list', order_by='vote number', order_direction='asc') }}">^</a></th>
-                <th>Title
+                <th>Question<br>
                     <a href="{{ url_for('route_list', order_by='title', order_direction='desc') }}">v</a>
                     <a href="{{ url_for('route_list', order_by='title', order_direction='asc') }}">^</a></th>
-                <th>Message
+                <th>Details<br>
                     <a href="{{ url_for('route_list', order_by='message', order_direction='desc') }}">v</a>
                     <a href="{{ url_for('route_list', order_by='message', order_direction='asc') }}">^</a></th>
                 <th>Image</th>
