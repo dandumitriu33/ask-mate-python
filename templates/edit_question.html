@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Edit question {{ question_id }}</title>
+<title>Edit Question {{ question_id }}</title>
 {% endblock head %}
 
 
 {% block body %}
 
+    <h1>Edit Question</h1>
+
     <form action="/question/{{ question_id }}/edit" method="POST">
-        <input type="text" name="title" value="{{ title }}">
-        <textarea name="message">{{ message }}</textarea>
+        <label>Question {{ question_id }}</label><br>
+        <input type="text" name="title" value="{{ title }}"><br>
+        <label>Details</label><br>
+        <textarea name="message" rows="6" cols="50">{{ message }}</textarea>
         <input type="submit" value="Submit edit">
-
-
     </form>
-
 
 
 {% endblock body %}

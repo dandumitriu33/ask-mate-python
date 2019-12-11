@@ -3,7 +3,7 @@
 
 {% block head %}
 
-<title>New answer</title>
+<title>New Answer</title>
 
 {% endblock %}
 
@@ -11,13 +11,14 @@
 
 {% block body %}
 
-    <form action="/question/{{ question_id }}" method="POST">
-        <label>Question {{ question_id }}</label>
-        <input type="text" name="question_id" value="{{ question_id }}" disabled>
-        <label>New answer:</label>
-        <textarea name="post_answer" rows="5" cols="20"></textarea>
-        <input type="submit" value="Post answer">
+    <h1>New Answer</h1>
 
+    <form action="/question/{{ question_id }}" method="POST">
+        <label>Question {{ question_id }}</label><br>
+        <input type="text" name="question_id" value="{{ question_id }}" disabled><br>
+        <label>New answer:</label><br>
+        <textarea name="post_answer" rows="6" cols="50"></textarea>
+        <input type="submit" value="Post answer">
     </form>
 
 

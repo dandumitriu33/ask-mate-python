@@ -8,12 +8,12 @@
 
 {% block body %}
 
-    <form action="/answer/{{ answer_id }}/edit" method="POST">
-        <p>Edit answer {{ answer_id }}<br>
-        <textarea name="message">{{ message }}</textarea>
-        <input type="submit" value="Submit edit">
-        </p>
+    <h1>Edit Answer</h1>
 
+    <form action="/answer/{{ answer_id }}/edit" method="POST">
+        <label>Edit answer {{ answer_id }}</label><br>
+        <textarea name="message" rows="6" cols="50">{{ message }}</textarea>
+        <input type="submit" value="Submit edit">
     </form>
 
 
