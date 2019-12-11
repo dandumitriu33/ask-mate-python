@@ -5,6 +5,9 @@ import util
 
 def sort_questions(order_key='submission_time', reversed=True):
     questions = connection.get_data()
+    if order_key == 'view_number' or order_key == 'vote_number':
+        sorted_questions = sorted(questions, key=lambda i: int(i[order_key]), reverse=reversed)
+        return sorted_questions
     sorted_questions = sorted(questions, key = lambda i: i[order_key], reverse=reversed)
     return sorted_questions
 
