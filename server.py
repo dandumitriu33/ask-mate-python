@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template, request, redirect, send_from_directory
 from werkzeug.utils import secure_filename
 import data_manager
+import connection
 
 UPLOAD_FOLDER = '/home/iulian/PycharmProjects/ask-mate-python/static/img'
 ALLOWED_EXTENSIONS = {'png', 'jpg'}
@@ -141,6 +142,68 @@ def add_question():
         return render_template('/add-question.html')
 
 
+@app.route('/question/<question_id>/vote_up')
+def question_vote_up(question_id):
+    questions = data_manager.get_data()
+    i = 0
+    while i < len(questions):
+        if questions[i]['id'] == question_id:
+            questions[i]['vote_number'] = int(questions[i]['vote_number']) + 1
+        i += 1
+    connection.write_data(questions, ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image'])
+    questions = data_manager.get_data()
+    return render_template('list.html', questions=questions)
+
+
+@app.route('/question/<question_id>/vote_down')
+def question_vote_down(question_id):
+    questions = data_manager.get_data()
+    i = 0
+    while i < len(questions):
+        if questions[i]['id'] == question_id:
+            questions[i]['vote_number'] = int(questions[i]['vote_number']) - 1
+        i += 1
+    connection.write_data(questions, ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image'])
+    questions = data_manager.get_data()
+    return render_template('list.html', questions=questions)
+
+
+@app.route('/answer/<answer_id>/vote_up')
+def answer_vote_up(answer_id):
+    answers = connection.read_answers()
+    i = 0
+    while i < len(answers):
+        if answers[i]['id'] == answer_id:
+            answers[i]['vote_number'] = int(answers[i]['vote_number']) + 1
+            question_id = answers[i]['question_id']
+        i += 1
+    connection.write_answers(answers)
+    question = data_manager.get_question(question_id)
+    answers = data_manager.get_answers(question_id)
+    return render_template('question.html',
+                           question=question,
+                           answers=answers,
+                           question_id=question_id)
+
+
+@app.route('/answer/<answer_id>/vote_down')
+def answer_vote_down(answer_id):
+    answers = connection.read_answers()
+    i = 0
+    while i < len(answers):
+        if answers[i]['id'] == answer_id:
+            answers[i]['vote_number'] = int(answers[i]['vote_number']) - 1
+            question_id = answers[i]['question_id']
+        i += 1
+    connection.write_answers(answers)
+    question = data_manager.get_question(question_id)
+    answers = data_manager.get_answers(question_id)
+    return render_template('question.html',
+                           question=question,
+                           answers=answers,
+                           question_id=question_id)
+
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -150,6 +213,7 @@ def allowed_file(filename):
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],
                                filename)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
