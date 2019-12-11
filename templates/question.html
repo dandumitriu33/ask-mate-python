@@ -7,9 +7,9 @@
 <h1 style="text-align: center">Question {{ question_id }}</h1>
 
     <p style="text-align: center">
-        <img src="/static/up.png" alt="upvote arrow" height="12">
+        <a href="/question/{{ question_id }}/vote_up"><img src="/static/up.png" alt="upvote arrow" height="12"></a>
         {{ question['vote_number'] }}
-        <img src="/static/down.png" alt="upvote arrow" height="12">
+        <a href="/question/{{ question_id }}/vote_down"><img src="/static/down.png" alt="downvote arrow" height="12"></a>
         <span>  </span><strong>
         {{ question['title'] }}</strong><br>
         <font size="1">Viewed {{ question['view_number'] }} times.
@@ -30,9 +30,9 @@
     {% else %}
         {% for answer in answers %}
             <p style="text-align: center">
-                <img src="/static/up.png" alt="upvote arrow" height="12">
+                <a href="/answer/{{ answer['id'] }}/vote_up"><img src="/static/up.png" alt="upvote arrow" height="12"></a>
                 {{ answer['vote_number'] }}
-                <img src="/static/down.png" alt="upvote arrow" height="12">
+                <a href="/answer/{{ answer['id'] }}/vote_down"><img src="/static/down.png" alt="downvote arrow" height="12"></a>
                 <span>  </span>
                 {{ answer['message'] }}<span>  </span>
                 <span> <font size="1">Submitted at: {{ answer['submission_time'] }}</font>
@@ -55,6 +55,10 @@
         <form action="{{ url_for('new_answer', question_id=question_id) }}">
             <input type="submit" value="Reply">
         </form>
+    </div>
+
+    <div style="text-align: center">
+        <a href="{{ url_for('route_list') }}">Back to main menu</a>
     </div>
 
 {% endblock body%}

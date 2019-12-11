@@ -33,17 +33,13 @@ def get_data():
     return connection.get_data()
 
 
-def create_id(data):
-    return len(data)
-
-
 def create_time():
     return int(time.time())
 
 
 def create_new_line(question):
-    new_line = {'id': create_id(get_data()), 'submission_time': create_time(), 'view_number': 0, 'vote_number':  0,
-                'title': question['title'], 'message': question['message'], 'image': ''}
+    new_line = {'id': util.generate_question_id(), 'submission_time': create_time(), 'view_number': 0, 'vote_number':  0,
+                'title': question['title'], 'message': question['message'], 'image': ""}
     return new_line
 
 
