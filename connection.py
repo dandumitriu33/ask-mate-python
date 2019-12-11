@@ -45,7 +45,13 @@ def write_data(new_data, fieldnames):
         csv_write = csv.DictWriter(file, fieldnames=fieldnames)
         csv_write.writeheader()
         for line in new_data:
-            csv_write.writerow({'id': line['id'], 'submission_time': line['submission_time'], 'view_number': line['view_number'],
-                                 'vote_number': line['vote_number'], 'title': line['title'], 'message': line['message'], 'image': line['image']})
+            csv_write.writerow({'id': line['id'],
+                                'submission_time': line['submission_time'],
+                                'view_number': line['view_number'],
+                                'vote_number': line['vote_number'],
+                                'title': line['title'],
+                                'message': line['message'],
+                                'image': line['image']
+                                })
 
 
