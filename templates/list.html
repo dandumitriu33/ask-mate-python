@@ -4,16 +4,30 @@
 
 {% block body %}
 
-<h1>List page</h1>
+<h1>ASK MATE</h1>
+
+    <a href="{{ url_for('add_question') }}">Add new question</a><br><br>
+
 <table>
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Submission time</th>
-                <th>View number</th>
-                <th>Vote number</th>
-                <th>Title</th>
-                <th>Message</th>
+                <th>Submission time
+                    <a href="{{ url_for('route_list', order_by='submission time', order_direction='desc') }}">v</a>
+                    <a href="{{ url_for('route_list', order_by='submission time', order_direction='asc') }}">^</a>
+                </th>
+                <th>View number
+                    <a href="{{ url_for('route_list', order_by='view number', order_direction='desc') }}">v</a>
+                    <a href="{{ url_for('route_list', order_by='view number', order_direction='asc') }}">^</a></th>
+                <th>Vote number
+                    <a href="{{ url_for('route_list', order_by='vote number', order_direction='desc') }}">v</a>
+                    <a href="{{ url_for('route_list', order_by='vote number', order_direction='asc') }}">^</a></th>
+                <th>Title
+                    <a href="{{ url_for('route_list', order_by='title', order_direction='desc') }}">v</a>
+                    <a href="{{ url_for('route_list', order_by='title', order_direction='asc') }}">^</a></th>
+                <th>Message
+                    <a href="{{ url_for('route_list', order_by='message', order_direction='desc') }}">v</a>
+                    <a href="{{ url_for('route_list', order_by='message', order_direction='asc') }}">^</a></th>
                 <th>Image</th>
             </tr>
         </thead>
@@ -21,7 +35,11 @@
             {% for question in questions %}
                 <tr>
                     {% for i in question %}
-                        <td>{{ question[i] }}</td>
+                        {% if i == 'title' %}
+                            <td><a href="{{ url_for('display_question', question_id=question['id']) }}">{{ question[i] }}</a></td>
+                        {% else %}
+                            <td>{{ question[i] }}</td>
+                        {% endif %}
                     {% endfor %}
                 </tr>
             {% endfor %}

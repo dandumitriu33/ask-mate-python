@@ -1,5 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
-import connection
+from flask import Flask, render_template, request, redirect
 import data_manager
 
 
@@ -9,8 +8,63 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/list')
 def route_list():
-    questions = data_manager.sort_questions('submission_time', True)
-    return render_template('list.html', questions=questions)
+    sort_by = request.args.get(key='order_by')
+    order_direction = request.args.get(key='order_direction')
+    if sort_by == 'submission time' and order_direction == 'desc':
+        questions = data_manager.sort_questions('submission_time', True)
+        return render_template('list.html',
+                               category=sort_by,
+                               questions=questions)
+    elif sort_by == 'submission time' and order_direction == 'asc':
+        questions = data_manager.sort_questions('submission_time', False)
+        return render_template('list.html',
+                               category=sort_by,
+                               questions=questions)
+    elif sort_by == 'title' and order_direction == 'desc':
+        questions = data_manager.sort_questions('title', True)
+        return render_template('list.html',
+                               category=sort_by,
+                               questions=questions)
+    elif sort_by == 'title' and order_direction == 'asc':
+        questions = data_manager.sort_questions('title', False)
+        return render_template('list.html',
+                               category=sort_by,
+                               questions=questions)
+    elif sort_by == 'message' and order_direction == 'desc':
+        questions = data_manager.sort_questions('message', True)
+        return render_template('list.html',
+                               category=sort_by,
+                               questions=questions)
+    elif sort_by == 'message' and order_direction == 'asc':
+        questions = data_manager.sort_questions('message', False)
+        return render_template('list.html',
+                               category=sort_by,
+                               questions=questions)
+    elif sort_by == 'view number' and order_direction == 'desc':
+        questions = data_manager.sort_questions('view_number', True)
+        return render_template('list.html',
+                               category=sort_by,
+                               questions=questions)
+    elif sort_by == 'view number' and order_direction == 'asc':
+        questions = data_manager.sort_questions('view_number', False)
+        return render_template('list.html',
+                               category=sort_by,
+                               questions=questions)
+    elif sort_by == 'vote number' and order_direction == 'desc':
+        questions = data_manager.sort_questions('vote_number', True)
+        return render_template('list.html',
+                               category=sort_by,
+                               questions=questions)
+    elif sort_by == 'vote number' and order_direction == 'asc':
+        questions = data_manager.sort_questions('vote_number', False)
+        return render_template('list.html',
+                               category=sort_by,
+                               questions=questions)
+    else:
+        questions = data_manager.get_data()
+        return render_template('list.html',
+                               category=sort_by,
+                               questions=questions)
 
 
 @app.route('/question/<question_id>')
