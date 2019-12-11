@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request, redirect
 import data_manager
+import connection
 
 
 app = Flask(__name__)
 
 LAST_VISITED_QUESTION = 0
+
 
 @app.route('/')
 @app.route('/list')
@@ -90,6 +92,40 @@ def display_question(question_id):
         question = data_manager.get_question(question_id)
         answers = data_manager.get_answers(question_id)
         LAST_VISITED_QUESTION = question_id
+        return render_template('question.html',
+                               question=question,
+                               answers=answers,
+                               question_id=question_id)
+
+
+@app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
+def edit_question(question_id):
+    if request.method == 'GET':
+        questions = data_manager.get_data()
+        i = 0
+        while i < len(questions):
+            if questions[i]['id'] == question_id:
+                title = questions[i]['title']
+                message = questions[i]['message']
+            i += 1
+        return render_template('edit_question.html',
+                               title=title,
+                               message=message,
+                               question_id=question_id)
+    elif request.method == 'POST':
+        new_title = request.form['title']
+        new_message = request.form['message']
+        questions = data_manager.get_data()
+        i = 0
+        while i < len(questions):
+            if questions[i]['id'] == question_id:
+                questions[i]['title'] = new_title
+                questions[i]['message'] = new_message
+            i += 1
+        connection.write_data(questions,
+                              ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image'])
+        question = data_manager.get_question(question_id)
+        answers = data_manager.get_answers(question_id)
         return render_template('question.html',
                                question=question,
                                answers=answers,
