@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Edit answer {{ answer_id }}</title>
+{% endblock head %}
+
+
+
+{% block body %}
+
+    <form action="/answer/{{ answer_id }}/edit" method="POST">
+        <p>Edit answer {{ answer_id }}<br>
+        <textarea name="message">{{ message }}</textarea>
+        <input type="submit" value="Submit edit">
+        </p>
+
+    </form>
+
+
+{% endblock body %}

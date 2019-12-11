@@ -1,6 +1,6 @@
-import os
-from flask import Flask, render_template, request, redirect, send_from_directory
+from flask import Flask, render_template, request, redirect, send_from_directory, url_for
 from werkzeug.utils import secure_filename
+import os
 import data_manager
 import connection
 
@@ -108,6 +108,99 @@ def display_question(question_id):
         question = data_manager.get_question(question_id)
         answers = data_manager.get_answers(question_id)
         LAST_VISITED_QUESTION = question_id
+        return render_template('question.html',
+                               question=question,
+                               answers=answers,
+                               question_id=question_id)
+
+
+@app.route('/question/<question_id>/delete', methods=['GET'])
+def delete_question(question_id):
+    questions = data_manager.get_data()
+    i = 0
+    while i < len(questions):
+        if questions[i]['id'] == question_id:
+            question_id = questions[i]['id']
+            questions.pop(i)
+        i += 1
+    connection.write_data(questions,
+                          ['id',
+                           'submission_time',
+                           'view_number',
+                           'vote_number',
+                           'title',
+                           'message',
+                           'image'])
+    answers = connection.read_answers()
+    j = 0
+    while j < len(answers):
+        if answers[j]['question_id'] == question_id:
+            answers.pop(j)
+        j += 1
+    connection.write_answers(answers)
+    questions = data_manager.get_data()
+    return render_template('list.html',
+                           questions=questions)
+
+
+@app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
+def edit_question(question_id):
+    if request.method == 'GET':
+        questions = data_manager.get_data()
+        i = 0
+        while i < len(questions):
+            if questions[i]['id'] == question_id:
+                title = questions[i]['title']
+                message = questions[i]['message']
+            i += 1
+        return render_template('edit_question.html',
+                               title=title,
+                               message=message,
+                               question_id=question_id)
+    elif request.method == 'POST':
+        new_title = request.form['title']
+        new_message = request.form['message']
+        questions = data_manager.get_data()
+        i = 0
+        while i < len(questions):
+            if questions[i]['id'] == question_id:
+                questions[i]['title'] = new_title
+                questions[i]['message'] = new_message
+            i += 1
+        connection.write_data(questions,
+                              ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image'])
+        question = data_manager.get_question(question_id)
+        answers = data_manager.get_answers(question_id)
+        return render_template('question.html',
+                               question=question,
+                               answers=answers,
+                               question_id=question_id)
+
+
+@app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
+def edit_answer(answer_id):
+    if request.method == 'GET':
+        answers = connection.read_answers()
+        i = 0
+        while i < len(answers):
+            if answers[i]['id'] == answer_id:
+                message = answers[i]['message']
+            i += 1
+        return render_template('edit_answer.html',
+                               message=message,
+                               answer_id=answer_id)
+    elif request.method == 'POST':
+        new_message = request.form['message']
+        answers = connection.read_answers()
+        i = 0
+        while i < len(answers):
+            if answers[i]['id'] == answer_id:
+                question_id = answers[i]['question_id']
+                answers[i]['message'] = new_message
+            i += 1
+        connection.write_answers(answers)
+        question = data_manager.get_question(question_id)
+        answers = data_manager.get_answers(question_id)
         return render_template('question.html',
                                question=question,
                                answers=answers,

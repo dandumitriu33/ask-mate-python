@@ -14,6 +14,10 @@
         {{ question['title'] }}</strong><br>
         <font size="1">Viewed {{ question['view_number'] }} times.
         Submitted at: {{ question['submission_time'] }}</font>
+
+        <a href="/question/{{ question_id }}/edit"><font size="1">edit</font></a>
+        <a href="/question/{{ question_id }}/delete"><font size="1">delete</font></a>
+
     </p>
     <p style="text-align: center">
         Details:<br>
@@ -31,7 +35,12 @@
                 <a href="/answer/{{ answer['id'] }}/vote_down"><img src="/static/down.png" alt="downvote arrow" height="12"></a>
                 <span>  </span>
                 {{ answer['message'] }}<span>  </span>
-                <span> <font size="1">Submitted at: {{ answer['submission_time'] }}</font></span> <a href="{{ url_for('delete_answer', answer_id=answer['id']) }}"><font size="1">delete</font></a><br>
+                <span> <font size="1">Submitted at: {{ answer['submission_time'] }}</font>
+
+                    <a href="/answer/{{ answer['id'] }}/edit"><font size="1">edit</font></a>
+                    <a href="{{ url_for('delete_answer', answer_id=answer['id']) }}"><font size="1">delete</font></a>
+
+                </span>
                 {% if answer['image'] != '' %}
                     <p>img</p>
                 {% endif %}
