@@ -74,12 +74,15 @@ def route_list():
                                    category=sort_by,
                                    questions=questions)
     elif request.method == 'POST':
+        new_data = request.form
         file = request.files['file']
-        print(file)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return f"{filename}"
+        data_manager.add_question_table(new_data)
+        questions = data_manager.get_data()
+        return render_template('/list.html',
+                               questions=questions)
 
 
 @app.route('/question/<question_id>/new-answer', methods=['GET'])
