@@ -4,6 +4,7 @@ import data_manager
 
 app = Flask(__name__)
 
+LAST_VISITED_QUESTION = 0
 
 @app.route('/')
 @app.route('/list')
@@ -67,8 +68,44 @@ def route_list():
                                questions=questions)
 
 
-@app.route('/question/<question_id>')
+@app.route('/question/<question_id>/new-answer', methods=['GET'])
+def new_answer(question_id):
+    return render_template('new-answer.html',
+                           question_id=question_id)
+
+
+@app.route('/question/<question_id>', methods=['GET', 'POST'])
 def display_question(question_id):
+    global LAST_VISITED_QUESTION
+    if request.method == 'GET':
+        question = data_manager.get_question(question_id)
+        answers = data_manager.get_answers(question_id)
+        LAST_VISITED_QUESTION = question_id
+        return render_template('question.html',
+                               question=question,
+                               answers=answers,
+                               question_id=question_id)
+    elif request.method == 'POST':
+        data_manager.add_answer_to_file(request.form['post_answer'], question_id)
+        question = data_manager.get_question(question_id)
+        answers = data_manager.get_answers(question_id)
+        LAST_VISITED_QUESTION = question_id
+        return render_template('question.html',
+                               question=question,
+                               answers=answers,
+                               question_id=question_id)
+
+
+@app.route('/answer/<answer_id>/delete', methods=['GET'])
+def delete_answer(answer_id):
+    answers = connection.read_answers()
+    i = 0
+    while i < len(answers):
+        if answers[i]['id'] == answer_id:
+            question_id = answers[i]['question_id']
+            answers.pop(i)
+        i += 1
+    connection.write_answers(answers)
     question = data_manager.get_question(question_id)
     answers = data_manager.get_answers(question_id)
     return render_template('question.html',
