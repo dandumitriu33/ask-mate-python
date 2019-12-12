@@ -8,7 +8,7 @@ import util
 # which is subject to change, depending on the server running the software
 
 UPLOAD_FOLDER = '/home/iulian/PycharmProjects/ask-mate-python/static/img'
-ALLOWED_EXTENSIONS = {'png', 'jpg'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -77,17 +77,26 @@ def route_list():
                                    questions=questions)
     elif request.method == 'POST':
         file = request.files['file']
+        new_question_id = util.generate_question_id()
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
+            filename = "q" + str(new_question_id) + secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        new_question = {"id": util.generate_question_id(),
-                        "submission_time": data_manager.create_time(),
-                        "view_number": 0,
-                        "vote_number": 0,
-                        'title': request.form['title'],
-                        'message': request.form['message'],
-                        'image': '/static/img/' + filename if file.filename else ''}
 
+            new_question = {"id": new_question_id,
+                            "submission_time": data_manager.create_time(),
+                            "view_number": 0,
+                            "vote_number": 0,
+                            'title': request.form['title'],
+                            'message': request.form['message'],
+                            'image': '/static/img/' + filename if file.filename else ''}
+        elif not file:
+            new_question = {"id": new_question_id,
+                            "submission_time": data_manager.create_time(),
+                            "view_number": 0,
+                            "vote_number": 0,
+                            'title': request.form['title'],
+                            'message': request.form['message'],
+                            'image': ''}
         data_manager.add_question_table(new_question)
         questions = data_manager.get_all_questions()
         return render_template('/list.html',
@@ -110,9 +119,27 @@ def display_question(question_id):
                                answers=answers,
                                question_id=question_id)
     elif request.method == 'POST':
-        data_manager.add_answer_to_file(request.form['post_answer'], question_id)
         question = data_manager.get_question(question_id)
         answers = data_manager.get_answers(question_id)
+        file = request.files['file']
+        new_answer_id = util.generate_answer_id()
+        new_answer = {"id": new_answer_id,
+                      "submission_time": data_manager.create_time(),
+                      "vote_number": 0,
+                      "question_id": question_id,
+                      'message': request.form['message'],
+                      'image': ''}
+        if file and allowed_file(file.filename):
+            filename = "a" + str(new_answer_id) + secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            new_answer = {"id": new_answer_id,
+                            "submission_time": data_manager.create_time(),
+                            "vote_number": 0,
+                            "question_id": question_id,
+                            'message': request.form['message'],
+                            'image': '/static/img/' + filename if file.filename else ''}
+        answers.append(new_answer)
+        data_manager.write_all_answers(answers)
         return render_template('question.html',
                                question=question,
                                answers=answers,
@@ -126,6 +153,7 @@ def delete_question(question_id):
     while i < len(questions):
         if questions[i]['id'] == question_id:
             question_id = questions[i]['id']
+            image_name = questions[i]['image']
             questions.pop(i)
         i += 1
     data_manager.write_all_questions(questions)
@@ -133,10 +161,18 @@ def delete_question(question_id):
     j = 0
     while j < len(answers):
         if answers[j]['question_id'] == question_id:
+            image_exists = answers[j]['image']
+            if image_exists != '':
+                try:
+                    complete_path = f"/home/iulian/PycharmProjects/ask-mate-python{image_name}"
+                    os.remove(complete_path)
+                except IsADirectoryError:
+                    print("Tried to delete a picture that doesn't exist.")
             answers.pop(j)
         j += 1
     data_manager.write_all_answers(answers)
     questions = data_manager.get_all_questions()
+
     return render_template('list.html',
                            questions=questions)
 
@@ -211,9 +247,13 @@ def delete_answer(answer_id):
     while i < len(answers):
         if answers[i]['id'] == answer_id:
             question_id = answers[i]['question_id']
+            image_name = answers[i]['image']
             answers.pop(i)
         i += 1
     data_manager.write_all_answers(answers)
+    if image_name != '':
+        complete_path = f"/home/iulian/PycharmProjects/ask-mate-python{image_name}"
+        os.remove(complete_path)
     question = data_manager.get_question(question_id)
     answers = data_manager.get_answers(question_id)
     return render_template('question.html',
@@ -301,5 +341,6 @@ def uploaded_file(filename):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,
+            host= '0.0.0.0')
 
