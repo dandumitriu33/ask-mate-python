@@ -7,7 +7,9 @@ import util
 # at this time, the file reading method only supports the absolute path,
 # which is subject to change, depending on the server running the software
 
-UPLOAD_FOLDER = '/home/iulian/PycharmProjects/ask-mate-python/static/img'
+UPLOAD_FOLDER = '/home/dan/codecool/web/w1/askmate/ask-mate-python/static/img'
+UPLOAD_FOLDER_IULIAN = '/home/iulian/PycharmProjects/ask-mate-python/static/img'
+UPLOAD_FOLDER_DAN = '/home/dan/codecool/web/w1/askmate/ask-mate-python/static/img'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
@@ -256,7 +258,7 @@ def delete_answer(answer_id):
         i += 1
     data_manager.write_all_answers(answers)
     if image_name != '':
-        complete_path = f"/home/iulian/PycharmProjects/ask-mate-python{image_name}"
+        complete_path = f"/home/dan/codecool/web/w1/askmate/ask-mate-python{image_name}"
         os.remove(complete_path)
     question = data_manager.get_question(question_id)
     answers = data_manager.get_answers(question_id)
@@ -346,5 +348,5 @@ def uploaded_file(filename):
 
 if __name__ == '__main__':
     app.run(debug=True,
-            host= '0.0.0.0')
+            host='0.0.0.0')
 
