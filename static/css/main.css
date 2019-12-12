@@ -81,7 +81,7 @@ form li + li {
 }
 
 .button {
-    background-color: #CCC; /* Green */
+    background-color: #CCC;
     border: none;
     color: white;
     padding: 10px 32px;
@@ -98,6 +98,50 @@ form li + li {
     background-color: gray;
 }
 
+.link_button {
+    background-color: #CCC;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 25px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-right: 10px;
+    margin-left: 3px;
+}
+
+.link_button:hover {
+    background-color: gray;
+}
+
+.sort_button {
+    background-color: #CCC;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 25px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-right: 2px;
+    margin-left: 2px;
+}
+
+.sort_button:hover {
+    background-color: gray;
+}
+
+.sort_bar {
+    text-align: center;
+}
+
 button {
     margin-left: .5em;
 }
@@ -111,6 +155,15 @@ button {
     border-radius: 10px;
 }
 
+.question_main {
+    border: 1px solid #CCC;
+    border-radius: 1em;
+    margin: 0 auto;
+    width: 70%;
+    padding: 5px 10px;
+    font-size: larger;
+}
+
 .question_details{
     border: 1px solid #CCC;
     border-radius: 1em;
@@ -118,6 +171,14 @@ button {
     width: 70%;
     padding: 5px 10px;
 
+}
+
+.question_image {
+    border: 1px solid #CCC;
+    border-radius: 1em;
+    margin: 0 auto;
+    width: 70%;
+    padding: 5px 10px;
 }
 
 .question_answer{
