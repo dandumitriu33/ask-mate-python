@@ -55,14 +55,14 @@ def add_question_table(new_question):
     connection.write_questions(current_data)
 
 
-def add_answer_to_file(answer, question_id):
+def add_answer_to_file(answer, question_id, answer_id, filename):
     answer_dictionary = {}
-    answer_dictionary['id'] = util.generate_answer_id()
+    answer_dictionary['id'] = answer_id
     answer_dictionary['submission_time'] = create_time()
     answer_dictionary['vote_number'] = 0
     answer_dictionary['question_id'] = question_id
     answer_dictionary['message'] = answer
-    answer_dictionary['image'] = ''
+    answer_dictionary['image'] = filename
     answers_list = connection.read_answers()
     answers_list.append(answer_dictionary)
     connection.write_answers(answers_list)

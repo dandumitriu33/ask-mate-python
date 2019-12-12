@@ -20,17 +20,17 @@ a:link {
 
 /* visited link */
 a:visited {
-  color: darkslateblue;
+  color: black;
 }
 
 /* mouse over link */
 a:hover {
-  color: darkblue;
+  color: darkslategray;
 }
 
 /* selected link */
 a:active {
-  color: darkblue;
+  color: darkslategrey;
 }
 
 
@@ -187,6 +187,10 @@ button {
     margin: 0 auto;
     width: 70%;
     padding: 5px 10px;
+}
+
+.question_link {
+    text-decoration: none;
 }
 
 .reply_button{
