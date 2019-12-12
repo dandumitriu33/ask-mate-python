@@ -14,11 +14,11 @@
         <a href="/question/{{ question_id }}/vote_down"><img src="/static/down.png" alt="downvote arrow" height="12"></a>
         <span>  </span><font size="5"><strong>{{ question['title'] }}</strong></font><br>
 
-        <font size="1">Viewed {{ question['view_number'] }} times.
+        <font size="1" color="#d3d3d3">Viewed {{ question['view_number'] }} times.
         Submitted at: {{ question['submission_time'] }}</font>
 
-        <a href="/question/{{ question_id }}/edit"><font size="1">edit</font></a>
-        <a href="/question/{{ question_id }}/delete"><font size="1">delete</font></a>
+        <a href="/question/{{ question_id }}/edit"><font size="1" color="#d3d3d3">edit</font></a>
+        <a href="/question/{{ question_id }}/delete"><font size="1" color="#d3d3d3">delete</font></a>
 
     </p>
     <p class="question_details">
@@ -40,10 +40,10 @@
                     <a href="/answer/{{ answer['id'] }}/vote_down"><img src="/static/down.png" alt="downvote arrow" height="12"></a>
                     <span>  </span>
                     {{ answer['message'] }}<span>  </span>
-                    <span> <font size="1">Submitted at: {{ answer['submission_time'] }}</font>
+                    <span> <font size="1" color="#d3d3d3">Submitted at: {{ answer['submission_time'] }}</font>
 
-                        <a href="/answer/{{ answer['id'] }}/edit"><font size="1">edit</font></a>
-                        <a href="{{ url_for('delete_answer', answer_id=answer['id']) }}"><font size="1">delete</font></a>
+                        <a href="/answer/{{ answer['id'] }}/edit"><font size="1" color="#d3d3d3">edit</font></a>
+                        <a href="{{ url_for('delete_answer', answer_id=answer['id']) }}"><font size="1" color="#d3d3d3">delete</font></a>
 
                     </span>
 
