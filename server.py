@@ -162,14 +162,18 @@ def delete_question(question_id):
     while j < len(answers):
         if answers[j]['question_id'] == question_id:
             image_exists = answers[j]['image']
-            if image_exists != '':
-                try:
-                    complete_path = f"/home/iulian/PycharmProjects/ask-mate-python{image_name}"
-                    os.remove(complete_path)
-                except IsADirectoryError:
-                    print("Tried to delete a picture that doesn't exist.")
             answers.pop(j)
-        j += 1
+            j = 0
+            # TODO: remove files from answers when teh question is deleted
+            # if image_exists != '':
+            #     try:
+            #         complete_path = f"/home/iulian/PycharmProjects/ask-mate-python{image_name}"
+            #         os.remove(complete_path)
+            #     except IsADirectoryError:
+            #         print("Tried to delete a picture that doesn't exist.")
+            #         continue
+        else:
+            j += 1
     data_manager.write_all_answers(answers)
     questions = data_manager.get_all_questions()
 
