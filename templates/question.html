@@ -1,64 +1,67 @@
 {% extends 'base.html' %}
 
-{% block head %}{% endblock head %}
+{% block head %}
+    <title>Question {{ question_id }}</title>
+{% endblock head %}
 
 {% block body %}
 
-<h1 style="text-align: center">Question {{ question_id }}</h1>
+<h1 style="text-align: center">ASK MATE</h1>
 
     <p style="text-align: center">
         <a href="/question/{{ question_id }}/vote_up"><img src="/static/up.png" alt="upvote arrow" height="12"></a>
         {{ question['vote_number'] }}
         <a href="/question/{{ question_id }}/vote_down"><img src="/static/down.png" alt="downvote arrow" height="12"></a>
-        <span>  </span><strong>
-        {{ question['title'] }}</strong><br>
-        <font size="1">Viewed {{ question['view_number'] }} times.
+        <span>  </span><font size="5"><strong>{{ question['title'] }}</strong></font><br>
+
+        <font size="1" color="#d3d3d3">Viewed {{ question['view_number'] }} times.
         Submitted at: {{ question['submission_time'] }}</font>
 
-        <a href="/question/{{ question_id }}/edit"><font size="1">edit</font></a>
-        <a href="/question/{{ question_id }}/delete"><font size="1">delete</font></a>
+        <a href="/question/{{ question_id }}/edit"><font size="1" color="#d3d3d3">edit</font></a>
+        <a href="/question/{{ question_id }}/delete"><font size="1" color="#d3d3d3">delete</font></a>
 
     </p>
-    <p style="text-align: center">
+    <p class="question_details">
         Details:<br>
+        <br>
         {{ question['message'] }}<span>  </span>
 
     </p>
     <hr>
+
     {% if answers == [] %}
         <p style="text-align: center">There are no answers at this time.</p>
     {% else %}
         {% for answer in answers %}
-            <p style="text-align: center">
-                <a href="/answer/{{ answer['id'] }}/vote_up"><img src="/static/up.png" alt="upvote arrow" height="12"></a>
-                {{ answer['vote_number'] }}
-                <a href="/answer/{{ answer['id'] }}/vote_down"><img src="/static/down.png" alt="downvote arrow" height="12"></a>
-                <span>  </span>
-                {{ answer['message'] }}<span>  </span>
-                <span> <font size="1">Submitted at: {{ answer['submission_time'] }}</font>
+            <div class="question_answer">
+                <p>
+                    <a href="/answer/{{ answer['id'] }}/vote_up"><img src="/static/up.png" alt="upvote arrow" height="12"></a>
+                    {{ answer['vote_number'] }}
+                    <a href="/answer/{{ answer['id'] }}/vote_down"><img src="/static/down.png" alt="downvote arrow" height="12"></a>
+                    <span>  </span>
+                    {{ answer['message'] }}<span>  </span>
+                    <span> <font size="1" color="#d3d3d3">Submitted at: {{ answer['submission_time'] }}</font>
 
-                    <a href="/answer/{{ answer['id'] }}/edit"><font size="1">edit</font></a>
-                    <a href="{{ url_for('delete_answer', answer_id=answer['id']) }}"><font size="1">delete</font></a>
+                        <a href="/answer/{{ answer['id'] }}/edit"><font size="1" color="#d3d3d3">edit</font></a>
+                        <a href="{{ url_for('delete_answer', answer_id=answer['id']) }}"><font size="1" color="#d3d3d3">delete</font></a>
 
-                </span>
-                {% if answer['image'] != '' %}
-                    <p>img</p>
-                {% endif %}
-            </p>
-            <hr>
+                    </span>
+
+                    {% if answer['image'] != '' %}
+                        <p>img</p>
+                    {% endif %}
+                </p>
+            </div><br>
+
         {% endfor %}
 
 
     {% endif %}
 
-    <div style="text-align: center">
-        <form action="{{ url_for('new_answer', question_id=question_id) }}">
-            <input type="submit" value="Reply">
-        </form>
-    </div>
 
-    <div style="text-align: center">
-        <a href="{{ url_for('route_list') }}">Back to main menu</a>
-    </div>
+    <form action="{{ url_for('new_answer', question_id=question_id) }}" class="reply_button">
+        <input type="submit" value="Reply" class="button">
+    </form>
+
 
 {% endblock body%}

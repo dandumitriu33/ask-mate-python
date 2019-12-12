@@ -4,22 +4,63 @@ body, html {
     font-family: "Ubuntu Mono";
 }
 
-.content {
-    margin: 0 auto;
-    width: 95%;
+h1 {
+    text-align: center;
 }
 
-table, td, th {
-    border: 1px solid black;
+.navbar {
+    margin-left: 3%;
+}
+
+
+/* unvisited link */
+a:link {
+  color: black;
+}
+
+/* visited link */
+a:visited {
+  color: darkslateblue;
+}
+
+/* mouse over link */
+a:hover {
+  color: darkblue;
+}
+
+/* selected link */
+a:active {
+  color: darkblue;
+}
+
+
+.content {
+    margin: 0 auto;
+    width: 96%;
+}
+
+td, th {
+    border-left:solid #CCC 1px;
+    border-top:solid #CCC 1px;
+}
+
+td:first-child, th:first-child {
+     border-left: none;
 }
 
 table {
-    border-collapse: collapse;
-    width: 100%;
+    border-collapse:separate;
+    border:solid #CCC 1px;
+    border-radius:1em;
+    -moz-border-radius:1em;
+    margin: 0 auto;
+    width: 96%;
 }
 
 th {
+    border-top: none;
     height: 30px;
+    padding: 8px;
 }
 
 td {
@@ -40,7 +81,65 @@ form li + li {
 }
 
 .button {
-    padding-left: 90px;
+    background-color: #CCC;
+    border: none;
+    color: white;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 10px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.button:hover {
+    background-color: gray;
+}
+
+.link_button {
+    background-color: #CCC;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 25px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-right: 10px;
+    margin-left: 3px;
+}
+
+.link_button:hover {
+    background-color: gray;
+}
+
+.sort_button {
+    background-color: #CCC;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 25px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-right: 2px;
+    margin-left: 2px;
+}
+
+.sort_button:hover {
+    background-color: gray;
+}
+
+.sort_bar {
+    text-align: center;
 }
 
 button {
@@ -48,6 +147,55 @@ button {
 }
 #content {
     width: 70%;
+}
+
+.text_container{
+    margin-top: 3px;
+    margin-bottom: 3px;
+    border-radius: 10px;
+}
+
+.question_main {
+    border: 1px solid #CCC;
+    border-radius: 1em;
+    margin: 0 auto;
+    width: 70%;
+    padding: 5px 10px;
+    font-size: larger;
+}
+
+.question_details{
+    border: 1px solid #CCC;
+    border-radius: 1em;
+    margin: 0 auto;
+    width: 70%;
+    padding: 5px 10px;
+
+}
+
+.question_image {
+    border: 1px solid #CCC;
+    border-radius: 1em;
+    margin: 0 auto;
+    width: 130px;
+    padding: 5px 10px;
+}
+
+.question_answer{
+    border: 1px solid #CCC;
+    border-radius: 1em;
+    margin: 0 auto;
+    width: 70%;
+    padding: 5px 10px;
+}
+
+.reply_button{
+    text-align: center;
+    border: 1px solid #CCC;
+    border-radius: 1em;
+    margin: 0 auto;
+    width: 70%;
+    padding: 5px 10px;
 }
 
 .form {

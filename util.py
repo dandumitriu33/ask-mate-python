@@ -11,7 +11,7 @@ def generate_answer_id():
 
 
 def generate_question_id():
-    question_list = connection.get_data()
+    question_list = connection.read_questions()
     list_of_ids = []
     for question in question_list:
         list_of_ids.append(int(question['id']))

@@ -1,33 +1,33 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <title> List page </title>
+    <title> Ask Mate - Home </title>
 {% endblock head %}
 
 {% block body %}
 
 <h1>ASK MATE</h1>
 
-    <a href="{{ url_for('add_question') }}">Add new question</a><br><br>
 
+<!--
 <table>
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Submission time
+                <th>Posted<br>
                     <a href="{{ url_for('route_list', order_by='submission time', order_direction='desc') }}">v</a>
                     <a href="{{ url_for('route_list', order_by='submission time', order_direction='asc') }}">^</a>
                 </th>
-                <th>View number
+                <th>Views<br>
                     <a href="{{ url_for('route_list', order_by='view number', order_direction='desc') }}">v</a>
                     <a href="{{ url_for('route_list', order_by='view number', order_direction='asc') }}">^</a></th>
-                <th>Vote number
+                <th>Votes<br>
                     <a href="{{ url_for('route_list', order_by='vote number', order_direction='desc') }}">v</a>
                     <a href="{{ url_for('route_list', order_by='vote number', order_direction='asc') }}">^</a></th>
-                <th>Title
+                <th>Question<br>
                     <a href="{{ url_for('route_list', order_by='title', order_direction='desc') }}">v</a>
                     <a href="{{ url_for('route_list', order_by='title', order_direction='asc') }}">^</a></th>
-                <th>Message
+                <th>Details<br>
                     <a href="{{ url_for('route_list', order_by='message', order_direction='desc') }}">v</a>
                     <a href="{{ url_for('route_list', order_by='message', order_direction='asc') }}">^</a></th>
                 <th>Image</th>
@@ -49,5 +49,50 @@
 </table>
 
     <p>{{ data_list }}</p>
+-->
+
+
+<div class="sort_bar">
+Posted
+    <a href="{{ url_for('route_list', order_by='submission time', order_direction='desc') }}"><button class="sort_button">v</button></a>
+    <a href="{{ url_for('route_list', order_by='submission time', order_direction='asc') }}"><button class="sort_button"><font size="3">^</font></button></a>
+Views
+    <a href="{{ url_for('route_list', order_by='view number', order_direction='desc') }}"><button class="sort_button">v</button></a>
+    <a href="{{ url_for('route_list', order_by='view number', order_direction='asc') }}"><button class="sort_button"><font size="3">^</font></button></a>
+Votes
+    <a href="{{ url_for('route_list', order_by='vote number', order_direction='desc') }}"><button class="sort_button">v</button></a>
+    <a href="{{ url_for('route_list', order_by='vote number', order_direction='asc') }}"><button class="sort_button"><font size="3">^</font></button></a>
+Question
+    <a href="{{ url_for('route_list', order_by='title', order_direction='desc') }}"><button class="sort_button">v</button></a>
+    <a href="{{ url_for('route_list', order_by='title', order_direction='asc') }}"><button class="sort_button"><font size="3">^</font></button></a>
+Details
+    <a href="{{ url_for('route_list', order_by='message', order_direction='desc') }}"><button class="sort_button">v</button></a>
+    <a href="{{ url_for('route_list', order_by='message', order_direction='asc') }}"><button class="sort_button"><font size="3">^</font></button></a></th>
+
+</div>
+
+
+
+<div>
+    {% for question in questions %}
+
+        <div class="question_main">
+            <a href="{{ url_for('display_question', question_id=question['id']) }}"><button class="link_button"><strong>&gt;</strong></button></a><strong>{{ question['title'] }}</strong><br>
+            <font size="1" color="#d3d3d3"><span>Votes: {{ question['vote_number'] }}</span>  <span>Views: {{ question['view_number'] }}</span>  <span>Submitted at: {{ question['submission_time'] }}</span>  <span>ID: {{ question['id'] }}</span></font>
+        </div>
+        <div class="question_details">
+            {{ question['message'] }}
+        </div>
+        {% if question['image'] != '' %}
+        <div class="question_details">
+            <a href="/static/img/codesample.png" target="_blank"><img src="/static/img/codesample.png" alt="Question related image" class="question_image"></a>
+        </div>
+        {% endif %}
+        <br>
+    {% endfor %}
+
+
+
+</div>
 
 {% endblock body%}

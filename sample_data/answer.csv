@@ -1,7 +1,6 @@
 id,submission_time,vote_number,question_id,message,image
 0,1493398154,5,0,You need to use brackets: my_list = [],
 1,1493088154,35,0,Look it up in the Python docs,
-3,1575998560,0,1,OMG,
-4,1575998631,0,1,OMG 2,
-5,1576055240,0,3,test 8 answer 1,
-6,1576055318,0,3,test 8 answer 2 edited OMG,
+2,1576078877,0,1,oopsie edited,
+3,1576080095,21,3,"Yes, this is true. Wikipedia numba one!",
+4,1576137182,0,3,I agree with the person above.,

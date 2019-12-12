@@ -6,14 +6,16 @@
 
 {% block body %}
 
-<h1>Add Question Page</h1>
+<h1>ASK MATE</h1>
 
     <form action="/" method="POST" enctype="multipart/form-data">
-        <p>Tiltle</p>
-        <input type="text" name="title" id="title" required="required">
-        <p>Question</p>
-        <textarea name="message" rows="6" cols="50" required="required"></textarea><br>
+        <label>Question</label><br>
+        <input type="text" name="title" id="title" required="required" class="text_container"><br>
+        <label>Details</label><br>
+        <textarea name="message" rows="6" cols="50" required="required" class="text_container"></textarea><br>
         <input type=file name="file">
-        <input type="submit" value="Post">
+        <input type="submit" value="Post" class="button">
     </form>
+
+
 {% endblock body%}
