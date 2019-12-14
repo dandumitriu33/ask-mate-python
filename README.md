@@ -14,20 +14,31 @@ number of views, number of votes, question alphabetically and details alphabetic
 This installation guide is made for the Ubuntu operating system. Other operating 
 systems have similar steps but please check the details on the web first.
 1. Clone the project on your computer
+
         sudo apt-get update
         sudo apt-get install git
         git --version
         *navigate to the destination folder on your machine
         git clone https://github.com/dandumitriu33/ask-mate-python.git
+        
 2. Make sure you have pip3 installed for python
+
         pip3 --version
+        
 3. Install and activate the virtual environment in the git project folder (not 
 where you ran git clone)
+
         pip3 install virtualenv
         virtualenv venv
         source venv/bin/activate
-4. Run the project on the given 0.0.0.0:5000 address
+        
+4. In the server.py file, please change the absolute path for the upload 
+folder - there are examples at the top
+
+5. Run the project on the given 0.0.0.0:5000 address
+
         python3 server.py
+        
 Note: You might be able to access the site from other devices on the same network. 
 If you aren't able to, check your local network or server computer firewall and 
 other security settings and run the server accordingly. 
