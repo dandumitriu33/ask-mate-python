@@ -6,7 +6,8 @@
 
 {% block body %}
 
-<h1>ASK MATE</h1>
+<a href="{{ url_for('route_list') }}" class="question_link"><h1>ASK MATE</h1></a>
+
 
     <form action="/" method="POST" enctype="multipart/form-data">
         <label>Question</label><br>
