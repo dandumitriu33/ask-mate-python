@@ -1,5 +1,5 @@
 import connection
-import time
+import datetime
 import util
 
 
@@ -17,64 +17,49 @@ def get_all_questions(cursor, order_by='submission_time', order_direction='DESC'
     return questions
 
 
-def get_all_answers():
-    return connection.read_answers()
+@connection.connection_handler
+def get_question(cursor, question_id):
+    cursor.execute(f"""
+                    UPDATE questions
+                    SET view_number = view_number + 1
+                    WHERE id = {question_id};
+                    SELECT * FROM questions WHERE id = {question_id}; 
+    """)
+    question = cursor.fetchall()
+    return question
 
 
-def write_all_questions(data_list):
-    connection.write_questions(data_list)
+@connection.connection_handler
+def get_answers_for_question(cursor, question_id):
+    cursor.execute(f"""
+                    SELECT * FROM answers WHERE question_id = {question_id} ORDER BY vote_number DESC;
+    """)
+    answers = cursor.fetchall()
+    return answers
 
 
-def write_all_answers(data_list):
-    connection.write_answers(data_list)
+@connection.connection_handler
+def post_question(cursor, title, message, image=None):
+    submission_time = datetime.datetime.utcnow().isoformat(' ', 'seconds')
+    cursor.execute(f"""
+                    INSERT INTO questions (submission_time, view_number, vote_number, title, message, image)
+                    VALUES ('{submission_time}', 0, 0, '{title}', '{message}', '{image}');
+""")
+    cursor.execute(f"""
+                    SELECT id FROM questions WHERE submission_time = '{submission_time}';
+""")
+    question_id = cursor.fetchall()[0]['id']
+    return question_id
 
 
-def sort_questions(order_key='submission_time', reversed=True):
-    questions = connection.read_questions()
-    if order_key == 'view_number' or order_key == 'vote_number':
-        sorted_questions = sorted(questions, key=lambda i: int(i[order_key]), reverse=reversed)
-        return sorted_questions
-    sorted_questions = sorted(questions, key = lambda i: i[order_key], reverse=reversed)
-    return sorted_questions
+@connection.connection_handler
+def delete_question(cursor, question_id):
 
+    # deletes answers, then the question
 
-def get_question(question_id):
-    questions_list = connection.read_questions()
-    for question in questions_list:
-        if question['id'] == question_id:
-            return question
-    return 'The question does not exist.'
-
-
-def get_answers(question_id):
-    given_answers = []
-    answers_list = connection.read_answers()
-    for answer in answers_list:
-        if answer['question_id'] == question_id:
-            given_answers.append(answer)
-    return given_answers
-
-
-def create_time():
-    return int(time.time())
-
-
-def add_question_table(new_question):
-    current_data = connection.read_questions()
-    current_data.append(new_question)
-    connection.write_questions(current_data)
-
-
-def add_answer_to_file(answer, question_id, answer_id, filename):
-    answer_dictionary = {}
-    answer_dictionary['id'] = answer_id
-    answer_dictionary['submission_time'] = create_time()
-    answer_dictionary['vote_number'] = 0
-    answer_dictionary['question_id'] = question_id
-    answer_dictionary['message'] = answer
-    answer_dictionary['image'] = filename
-    answers_list = connection.read_answers()
-    answers_list.append(answer_dictionary)
-    connection.write_answers(answers_list)
-
-
+    cursor.execute(f"""
+                    DELETE FROM answers
+                    WHERE question_id = {question_id};
+                    DELETE FROM questions
+                    WHERE id = {question_id};
+    """)

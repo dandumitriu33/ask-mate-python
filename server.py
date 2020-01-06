@@ -45,76 +45,39 @@ def new_answer(question_id):
                            question_id=question_id)
 
 
-@app.route('/question/<question_id>', methods=['GET', 'POST'])
+@app.route('/question/<question_id>')
 def display_question(question_id):
+    question_id = int(question_id)
+    question = data_manager.get_question(question_id)
+    answers = data_manager.get_answers_for_question(question_id)
+    return render_template('question.html',
+                           question_id=question_id,
+                           question=question,
+                           answers=answers)
+
+
+@app.route('/add-question', methods=['GET', 'POST'])
+def new_question():
     if request.method == 'GET':
-        question = data_manager.get_question(question_id)
-        answers = data_manager.get_answers(question_id)
-        return render_template('question.html',
-                               question=question,
-                               answers=answers,
-                               question_id=question_id)
+        return render_template('add-question.html')
     elif request.method == 'POST':
+        new_question_title = request.form['title'].replace("'", "''")
+        new_question_message = request.form['message'].replace("'", "''")
+        question_id = data_manager.post_question(new_question_title, new_question_message)
         question = data_manager.get_question(question_id)
-        answers = data_manager.get_answers(question_id)
-        file = request.files['file']
-        new_answer_id = util.generate_answer_id()
-        new_answer = {"id": new_answer_id,
-                      "submission_time": data_manager.create_time(),
-                      "vote_number": 0,
-                      "question_id": question_id,
-                      'message': request.form['message'],
-                      'image': ''}
-        if file and allowed_file(file.filename):
-            filename = "a" + str(new_answer_id) + secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            new_answer = {"id": new_answer_id,
-                            "submission_time": data_manager.create_time(),
-                            "vote_number": 0,
-                            "question_id": question_id,
-                            'message': request.form['message'],
-                            'image': '/static/img/' + filename if file.filename else ''}
-        answers.append(new_answer)
-        data_manager.write_all_answers(answers)
+        answers = data_manager.get_answers_for_question(question_id)
         return render_template('question.html',
+                               question_id=question_id,
                                question=question,
-                               answers=answers,
-                               question_id=question_id)
+                               answers=answers)
 
 
-@app.route('/question/<question_id>/delete', methods=['GET'])
+# TODO: remove files from answers when the question is deleted
+@app.route('/question/<question_id>/delete')
 def delete_question(question_id):
-    questions = data_manager.get_all_questions()
-    i = 0
-    while i < len(questions):
-        if questions[i]['id'] == question_id:
-            question_id = questions[i]['id']
-            image_name = questions[i]['image']
-            questions.pop(i)
-        i += 1
-    data_manager.write_all_questions(questions)
-    answers = data_manager.get_all_answers()
-    j = 0
-    while j < len(answers):
-        if answers[j]['question_id'] == question_id:
-            image_exists = answers[j]['image']
-            answers.pop(j)
-            j = 0
-            # TODO: remove files from answers when teh question is deleted
-            # if image_exists != '':
-            #     try:
-            #         complete_path = f"/home/iulian/PycharmProjects/ask-mate-python{image_name}"
-            #         os.remove(complete_path)
-            #     except IsADirectoryError:
-            #         print("Tried to delete a picture that doesn't exist.")
-            #         continue
-        else:
-            j += 1
-    data_manager.write_all_answers(answers)
-    questions = data_manager.get_all_questions()
+    data_manager.delete_question(question_id)
+    return redirect(url_for('list_all_questions'))
 
-    return render_template('list.html',
-                           questions=questions)
 
 
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
