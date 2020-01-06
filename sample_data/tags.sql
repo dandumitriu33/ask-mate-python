@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS tags;
+CREATE TABLE tags (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR (50)
+);
