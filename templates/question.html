@@ -6,13 +6,13 @@
 
 {% block body %}
 
-<h1 style="text-align: center">ASK MATE</h1>
+<h1>ASK MATE</h1>
 
     <p style="text-align: center">
         <a href="/question/{{ question_id }}/vote-up"><img src="/static/up.png" alt="upvote arrow" height="12"></a>
         {{ question.vote_number }}
         <a href="/question/{{ question_id }}/vote-down"><img src="/static/down.png" alt="downvote arrow" height="12"></a>
-        <span>  </span><font size="5"><strong>{{ question['title'] }}</strong></font><br>
+        <span>  </span><font size="5"><strong class="question-title">{{ question['title'] }}</strong></font><br>
 
         <font size="1" color="#d3d3d3">Viewed {{ question['view_number'] }} times.
         Submitted at: {{ question['submission_time'] }}</font>
@@ -29,7 +29,7 @@
     </p>
     {% if question['image'] != '' %}
         <div class="question_details">
-            <a href="{{ question['image'] }}" target="_blank"><img src="{{ question['image'] }}" alt="Question related image" class="question_image"></a>
+            <a href="{{ question['image'] }}" target="_blank"><img src="{{ question['image'] }}" alt="Question related image"></a>
         </div>
     {% endif %}
     <hr>
@@ -38,29 +38,23 @@
         <p style="text-align: center">There are no answers at this time.</p>
     {% else %}
         {% for answer in answers %}
-            <div class="question_answer">
-                <p>
+
+                <p class="question_details">
                     <a href="/answer/{{ answer['id'] }}/vote-up"><img src="/static/up.png" alt="upvote arrow" height="12"></a>
                     {{ answer['vote_number'] }}
                     <a href="/answer/{{ answer['id'] }}/vote-down"><img src="/static/down.png" alt="downvote arrow" height="12"></a>
                     <span>  </span>
                     {{ answer['message'] }}<span>  </span>
-                    <span> <font size="1" color="#d3d3d3">Submitted at: {{ answer['submission_time'] }}</font>
-
-                        <a href="/answer/{{ answer['id'] }}/edit"><font size="1" color="#d3d3d3">edit</font></a>
-                        <a href="{{ url_for('delete_answer', answer_id=answer['id']) }}"><font size="1" color="#d3d3d3">delete</font></a>
-
+                    <span>Submitted at: {{ answer['submission_time'] }}
+                        <a href="/answer/{{ answer['id'] }}/edit">edit</a>
+                        <a href="{{ url_for('delete_answer', answer_id=answer['id']) }}">delete</a>
                     </span>
-
-
                 </p>
 
 
-            </div>
-
             {% if answer['image'] != '' %}
                 <div class="question_details">
-                        <a href="{{ answer['image'] }}" target="_blank"><img src="{{ answer['image'] }}" alt="Answer related image" class="question_image"></a>
+                        <a href="{{ answer['image'] }}" target="_blank"><img src="{{ answer['image'] }}" alt="Answer related image"></a>
                 </div>
             {% endif %}
             <br>
@@ -70,9 +64,7 @@
     {% endif %}
 
 
-    <form action="{{ url_for('question_new_answer', question_id=question_id) }}" class="reply_button">
-        <input type="submit" value="Reply" class="button">
-    </form>
+    <a href="{{ url_for('question_new_answer', question_id=question_id) }}" class="reply-button">Reply</a>
 
 
 {% endblock body%}

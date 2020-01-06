@@ -11,23 +11,20 @@
 </head>
 
 <body>
-    <a href="{{ url_for('index') }}">home</a>
-    <a href="{{ url_for('list_all_questions') }}">list</a>
-    <a href="{{ url_for('new_question') }}">add question</a>
-    <a href="{{ url_for('info') }}">info</a>
-    <br>
-
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('info') }}" class="nav-button">I</a></li>
+            <li><a href="{{ url_for('list_all_questions') }}" class="nav-button">L</a></li>
+            <li><a href="{{ url_for('new_question') }}" class="nav-button">+</a></li>
+            <li><a href="{{ url_for('index') }}" class="nav-button">H</a></li>
+        </ul>
+    </nav>
 
 
 
     {% block body %}{% endblock body %}
 
-    <div class="navbar">
-        <p>
-        <a href="{{ url_for('list_all_questions') }}"><button class="sort_button">H</button></a>
-            <a href="{{ url_for('add_question') }}"><button class="sort_button"><strong><font size="3">+</font></strong></button></a><br><br>
-        </p>
-    </div>
+
 
 </body>
 </html>

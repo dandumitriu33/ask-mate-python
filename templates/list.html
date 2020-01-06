@@ -13,10 +13,13 @@
 <div>
     {% for question in questions %}
 
-        <div class="question_main">
-            <!-- <a href="{{ url_for('display_question', question_id=question['id']) }}"><button class="link_button"><strong>&gt;</strong></button></a><a href="{{ url_for('display_question', question_id=question['id']) }}" class="question_link"><strong>{{ question['title'] }}</strong></a><br> -->
-            <span><a href="{{ url_for('display_question', question_id=question.id ) }}"><strong>{{ question.title }}</strong></a></span>
-            <font size="1" color="#d3d3d3"><span>Votes: {{ question['vote_number'] }}</span>  <span>Views: {{ question['view_number'] }}</span>  <span>Submitted at: {{ question['submission_time'] }}</span>  <span>ID: {{ question['id'] }}</span></font>
+        <div class="question-main">
+            <span><a href="{{ url_for('display_question', question_id=question.id ) }}">
+                <strong class="question-title">{{ question.title }}</strong></a></span>
+                <span>Votes: {{ question['vote_number'] }}</span>
+                <span>Views: {{ question['view_number'] }}</span>
+                <span>Submitted at: {{ question['submission_time'] }}</span>
+                <span>ID: {{ question['id'] }}</span>
         </div>
         <div class="question_details">
             {{ question['message'] }}
