@@ -23,7 +23,7 @@ def info():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return 'home page'
+    return render_template('index.html')
 
 
 @app.route('/list')
@@ -37,12 +37,6 @@ def list_all_questions():
     questions = data_manager.get_all_questions(order_by, order_direction)
     return render_template('list.html',
                            questions=questions)
-
-
-@app.route('/question/<question_id>/new-answer', methods=['GET'])
-def new_answer(question_id):
-    return render_template('new-answer.html',
-                           question_id=question_id)
 
 
 @app.route('/question/<question_id>')
@@ -59,7 +53,7 @@ def display_question(question_id):
 @app.route('/add-question', methods=['GET', 'POST'])
 def new_question():
     if request.method == 'GET':
-        return render_template('add-question.html')
+        return render_template('add_question.html')
     elif request.method == 'POST':
         new_question_title = request.form['title'].replace("'", "''")
         new_question_message = request.form['message'].replace("'", "''")
@@ -79,157 +73,91 @@ def delete_question(question_id):
     return redirect(url_for('list_all_questions'))
 
 
-
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
 def edit_question(question_id):
     if request.method == 'GET':
-        questions = data_manager.get_all_questions()
-        i = 0
-        while i < len(questions):
-            if questions[i]['id'] == question_id:
-                title = questions[i]['title']
-                message = questions[i]['message']
-            i += 1
+        question = data_manager.get_question(question_id)
         return render_template('edit_question.html',
-                               title=title,
-                               message=message,
+                               question_id=question_id,
+                               question=question)
+    elif request.method == 'POST':
+        edited_question_title = request.form['title'].replace("'", "''")
+        edited_question_message = request.form['message'].replace("'", "''")
+        data_manager.update_question(question_id, edited_question_title, edited_question_message)
+        return redirect(url_for('display_question', question_id=question_id))
+
+
+@app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
+def question_new_answer(question_id):
+    if request.method == 'GET':
+        return render_template('new_answer.html',
                                question_id=question_id)
     elif request.method == 'POST':
-        new_title = request.form['title']
-        new_message = request.form['message']
-        questions = data_manager.get_all_questions()
-        i = 0
-        while i < len(questions):
-            if questions[i]['id'] == question_id:
-                questions[i]['title'] = new_title
-                questions[i]['message'] = new_message
-            i += 1
-        data_manager.write_all_questions(questions)
-        question = data_manager.get_question(question_id)
-        answers = data_manager.get_answers(question_id)
-        return render_template('question.html',
-                               question=question,
-                               answers=answers,
-                               question_id=question_id)
+        new_answer_message = request.form['message'].replace("'", "''")
+        data_manager.post_answer(question_id, new_answer_message)
+        return redirect(url_for('display_question', question_id=question_id))
 
 
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
 def edit_answer(answer_id):
     if request.method == 'GET':
-        answers = data_manager.get_all_answers()
-        i = 0
-        while i < len(answers):
-            if answers[i]['id'] == answer_id:
-                message = answers[i]['message']
-            i += 1
+        answer = data_manager.get_answer(answer_id)
         return render_template('edit_answer.html',
-                               message=message,
-                               answer_id=answer_id)
+                               answer_id=answer_id,
+                               answer=answer)
     elif request.method == 'POST':
-        new_message = request.form['message']
-        answers = data_manager.get_all_answers()
-        i = 0
-        while i < len(answers):
-            if answers[i]['id'] == answer_id:
-                question_id = answers[i]['question_id']
-                answers[i]['message'] = new_message
-            i += 1
-        data_manager.write_all_answers(answers)
-        question = data_manager.get_question(question_id)
-        answers = data_manager.get_answers(question_id)
-        return render_template('question.html',
-                               question=question,
-                               answers=answers,
-                               question_id=question_id)
+        answer = data_manager.get_answer(answer_id)
+        question_id = answer['question_id']
+        edited_answer_message = request.form['message'].replace("'", "''")
+        data_manager.update_answer(answer_id, edited_answer_message)
+        return redirect(url_for('display_question',
+                                question_id=question_id))
 
 
-@app.route('/answer/<answer_id>/delete', methods=['GET'])
+@app.route('/answer/<answer_id>/delete')
 def delete_answer(answer_id):
-    answers = data_manager.get_all_answers()
-    i = 0
-    while i < len(answers):
-        if answers[i]['id'] == answer_id:
-            question_id = answers[i]['question_id']
-            image_name = answers[i]['image']
-            answers.pop(i)
-        i += 1
-    data_manager.write_all_answers(answers)
-    if image_name != '':
-        complete_path = f"/home/dan/codecool/web/w1/askmate/ask-mate-python{image_name}"
-        os.remove(complete_path)
-    question = data_manager.get_question(question_id)
-    answers = data_manager.get_answers(question_id)
-    return render_template('question.html',
-                           question=question,
-                           answers=answers,
-                           question_id=question_id)
+    answer = data_manager.get_answer(answer_id)
+    question_id = answer['question_id']
+    data_manager.delete_answer(answer_id)
+    return redirect(url_for('display_question',
+                            question_id=question_id))
 
 
 @app.route('/add-question')
 def add_question():
-    return render_template('/add-question.html')
+    return render_template('/add_question.html')
 
 
-@app.route('/question/<question_id>/vote_up')
+@app.route('/question/<question_id>/vote-up')
 def question_vote_up(question_id):
-    questions = data_manager.get_all_questions()
-    i = 0
-    while i < len(questions):
-        if questions[i]['id'] == question_id:
-            questions[i]['vote_number'] = int(questions[i]['vote_number']) + 1
-        i += 1
-    data_manager.write_all_questions(questions)
-    questions = data_manager.get_all_questions()
-    return render_template('list.html', questions=questions)
+    data_manager.question_vote_up(question_id)
+    return redirect(url_for('display_question',
+                            question_id=question_id))
 
 
-@app.route('/question/<question_id>/vote_down')
+@app.route('/question/<question_id>/vote-down')
 def question_vote_down(question_id):
-    questions = data_manager.get_all_questions()
-    i = 0
-    while i < len(questions):
-        if questions[i]['id'] == question_id:
-            questions[i]['vote_number'] = int(questions[i]['vote_number']) - 1
-        i += 1
-    data_manager.write_all_questions(questions)
-    questions = data_manager.get_all_questions()
-    return render_template('list.html', questions=questions)
+    data_manager.question_vote_down(question_id)
+    return redirect(url_for('display_question',
+                            question_id=question_id))
 
 
-@app.route('/answer/<answer_id>/vote_up')
+@app.route('/answer/<answer_id>/vote-up')
 def answer_vote_up(answer_id):
-    answers = data_manager.get_all_answers()
-    i = 0
-    while i < len(answers):
-        if answers[i]['id'] == answer_id:
-            answers[i]['vote_number'] = int(answers[i]['vote_number']) + 1
-            question_id = answers[i]['question_id']
-        i += 1
-    data_manager.write_all_answers(answers)
-    question = data_manager.get_question(question_id)
-    answers = data_manager.get_answers(question_id)
-    return render_template('question.html',
-                           question=question,
-                           answers=answers,
-                           question_id=question_id)
+    data_manager.answer_vote_up(answer_id)
+    answer = data_manager.get_answer(answer_id)
+    question_id = answer['question_id']
+    return redirect(url_for('display_question',
+                            question_id=question_id))
 
 
-@app.route('/answer/<answer_id>/vote_down')
+@app.route('/answer/<answer_id>/vote-down')
 def answer_vote_down(answer_id):
-    answers = data_manager.get_all_answers()
-    i = 0
-    while i < len(answers):
-        if answers[i]['id'] == answer_id:
-            answers[i]['vote_number'] = int(answers[i]['vote_number']) - 1
-            question_id = answers[i]['question_id']
-        i += 1
-    data_manager.write_all_answers(answers)
-    question = data_manager.get_question(question_id)
-    answers = data_manager.get_answers(question_id)
-    return render_template('question.html',
-                           question=question,
-                           answers=answers,
-                           question_id=question_id)
+    data_manager.answer_vote_down(answer_id)
+    answer = data_manager.get_answer(answer_id)
+    question_id = answer['question_id']
+    return redirect(url_for('display_question',
+                            question_id=question_id))
 
 
 def allowed_file(filename):

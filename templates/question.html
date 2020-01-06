@@ -9,9 +9,9 @@
 <h1 style="text-align: center">ASK MATE</h1>
 
     <p style="text-align: center">
-        <a href="/question/{{ question_id }}/vote_up"><img src="/static/up.png" alt="upvote arrow" height="12"></a>
-        {{ question['vote_number'] }}
-        <a href="/question/{{ question_id }}/vote_down"><img src="/static/down.png" alt="downvote arrow" height="12"></a>
+        <a href="/question/{{ question_id }}/vote-up"><img src="/static/up.png" alt="upvote arrow" height="12"></a>
+        {{ question.vote_number }}
+        <a href="/question/{{ question_id }}/vote-down"><img src="/static/down.png" alt="downvote arrow" height="12"></a>
         <span>  </span><font size="5"><strong>{{ question['title'] }}</strong></font><br>
 
         <font size="1" color="#d3d3d3">Viewed {{ question['view_number'] }} times.
@@ -40,9 +40,9 @@
         {% for answer in answers %}
             <div class="question_answer">
                 <p>
-                    <a href="/answer/{{ answer['id'] }}/vote_up"><img src="/static/up.png" alt="upvote arrow" height="12"></a>
+                    <a href="/answer/{{ answer['id'] }}/vote-up"><img src="/static/up.png" alt="upvote arrow" height="12"></a>
                     {{ answer['vote_number'] }}
-                    <a href="/answer/{{ answer['id'] }}/vote_down"><img src="/static/down.png" alt="downvote arrow" height="12"></a>
+                    <a href="/answer/{{ answer['id'] }}/vote-down"><img src="/static/down.png" alt="downvote arrow" height="12"></a>
                     <span>  </span>
                     {{ answer['message'] }}<span>  </span>
                     <span> <font size="1" color="#d3d3d3">Submitted at: {{ answer['submission_time'] }}</font>
@@ -70,7 +70,7 @@
     {% endif %}
 
 
-    <form action="{{ url_for('new_answer', question_id=question_id) }}" class="reply_button">
+    <form action="{{ url_for('question_new_answer', question_id=question_id) }}" class="reply_button">
         <input type="submit" value="Reply" class="button">
     </form>
 

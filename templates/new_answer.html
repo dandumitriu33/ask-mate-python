@@ -13,7 +13,7 @@
 
     <h1>New Answer</h1>
 
-    <form action="/question/{{ question_id }}" method="POST" enctype="multipart/form-data">
+    <form action="/question/{{ question_id }}/new-answer" method="POST">
         <label>Question {{ question_id }}</label><br>
         <input type="text" name="question_id" value="{{ question_id }}" disabled class="text_container"><br>
         <label>New answer:</label><br>

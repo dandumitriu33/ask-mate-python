@@ -11,6 +11,14 @@
 </head>
 
 <body>
+    <a href="{{ url_for('index') }}">home</a>
+    <a href="{{ url_for('list_all_questions') }}">list</a>
+    <a href="{{ url_for('new_question') }}">add question</a>
+    <a href="{{ url_for('info') }}">info</a>
+    <br>
+
+
+
 
     {% block body %}{% endblock body %}
 
