@@ -84,6 +84,12 @@ def update_question(cursor, question_id, title, message):
                     WHERE id = {question_id};
     """)
 
+@connection.connection_handler
+def post_comment(cursor, message):
+    cursor.execute(f"""
+                    INSERT INTO tags (name)
+                    VALUES ('{message}')
+""")
 
 @connection.connection_handler
 def post_answer(cursor, question_id, message, image=None):

@@ -24,9 +24,8 @@ def info():
 @app.route('/', methods=['GET', 'POST'])
 def index():
     questions = data_manager.get_new_five_questions()
-    return render_template('list.html',
+    return render_template('index.html',
                            questions=questions)
-    return render_template('index.html')
 
 
 @app.route('/list')
@@ -89,6 +88,13 @@ def edit_question(question_id):
         data_manager.update_question(question_id, edited_question_title, edited_question_message)
         return redirect(url_for('display_question', question_id=question_id))
 
+@app.route('/question/<question_id>new-comment', methods=['GET', 'POST'])
+def question_new_commet(question_id):
+    if request.method == 'GET':
+        return render_template('new_comment.html', question_id=question_id)
+    elif request.method == 'POST':
+        new_commet_message = request.form['message'].replace("'", "''")
+        data_manager.post_comment(new_commet_message)
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def question_new_answer(question_id):
