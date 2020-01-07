@@ -6,6 +6,32 @@
 
 <h1>Home page</h1>
 
+<div>
+    {% for question in questions %}
+
+        <div class="question-main">
+            <span><a href="{{ url_for('display_question', question_id=question.id ) }}">
+                <strong class="question-title">{{ question.title }}</strong></a></span>
+                <span>Votes: {{ question['vote_number'] }}</span>
+                <span>Views: {{ question['view_number'] }}</span>
+                <span>Submitted at: {{ question['submission_time'] }}</span>
+                <span>ID: {{ question['id'] }}</span>
+        </div>
+        <div class="question_details">
+            {{ question['message'] }}
+        </div>
+        {% if question['image'] != '' %}
+        <div class="question_details">
+            <!-- <a href="{{ question['image'] }}" target="_blank"><img src="{{ question['image'] }}" alt="Question related image" class="question_image"></a> -->
+        </div>
+        {% endif %}
+        <br>
+    {% endfor %}
+
+
+
+</div>
+
 
 
 

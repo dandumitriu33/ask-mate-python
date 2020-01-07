@@ -4,6 +4,16 @@ import util
 
 
 @connection.connection_handler
+def get_new_five_questions(cursor):
+    cursor.execute(f"""
+                    SELECT * FROM questions ORDER BY submission_time DESC LIMIT 5;
+    """)
+    questions = cursor.fetchall()
+    return questions
+
+
+
+@connection.connection_handler
 def get_all_questions(cursor, order_by='submission_time', order_direction='DESC'):
     order_dict = {
                 'submission_time': "SELECT * FROM questions ORDER BY submission_time ",
@@ -36,6 +46,7 @@ def get_answers_for_question(cursor, question_id):
     """)
     answers = cursor.fetchall()
     return answers
+
 
 
 @connection.connection_handler

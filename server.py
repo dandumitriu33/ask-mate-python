@@ -23,6 +23,9 @@ def info():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    questions = data_manager.get_new_five_questions()
+    return render_template('list.html',
+                           questions=questions)
     return render_template('index.html')
 
 
