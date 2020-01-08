@@ -21,7 +21,7 @@ def info():
     return render_template('info.html')
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def index():
     questions = data_manager.get_new_five_questions()
     return render_template('index.html',
@@ -46,9 +46,11 @@ def display_question(question_id):
     question_id = int(question_id)
     question = data_manager.get_question(question_id)
     answers = data_manager.get_answers_for_question(question_id)
+    comments = data_manager.get_comment_for_question(question_id)
     return render_template('question.html',
                            question_id=question_id,
                            question=question,
+                           comments=comments,
                            answers=answers)
 
 
@@ -88,13 +90,16 @@ def edit_question(question_id):
         data_manager.update_question(question_id, edited_question_title, edited_question_message)
         return redirect(url_for('display_question', question_id=question_id))
 
-@app.route('/question/<question_id>new-comment', methods=['GET', 'POST'])
-def question_new_commet(question_id):
+
+@app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
+def question_new_comment(question_id):
     if request.method == 'GET':
         return render_template('new_comment.html', question_id=question_id)
     elif request.method == 'POST':
-        new_commet_message = request.form['message'].replace("'", "''")
-        data_manager.post_comment(new_commet_message)
+        new_comment_message = request.form['message'].replace("'", "''")
+        data_manager.post_comment_question(question_id, new_comment_message)
+        return redirect(url_for('display_question', question_id=question_id))
+
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def question_new_answer(question_id):
@@ -106,6 +111,15 @@ def question_new_answer(question_id):
         data_manager.post_answer(question_id, new_answer_message)
         return redirect(url_for('display_question', question_id=question_id))
 
+@app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
+def answer_new_comment(answer_id):
+    if request.method == 'GET':
+        return render_template('new_comment.html', answer_id=answer_id)
+    elif request.method == 'POST':
+        new_comment_mesage = request.form['message'].replace("'", "''")
+        data_manager.post_comment_answer(answer_id, new_comment_mesage)
+        question_id = data_manager.get_answer_question_id(answer_id)
+        return redirect(url_for('display_question', question_id=question_id))
 
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
 def edit_answer(answer_id):
@@ -182,5 +196,5 @@ def uploaded_file(filename):
 
 if __name__ == '__main__':
     app.run(debug=True,
-            host='0.0.0.0')
+            host='localhost')
 

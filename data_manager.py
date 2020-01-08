@@ -85,10 +85,27 @@ def update_question(cursor, question_id, title, message):
     """)
 
 @connection.connection_handler
-def post_comment(cursor, message):
+def get_comment_for_question(cursor, question_id):
+    cursor.execute(f'''
+                    SELECT * FROM comments WHERE question_id = {question_id}
+''')
+    comment = cursor.fetchall()
+    return comment
+
+@connection.connection_handler
+def post_comment_question(cursor, question_id, message):
+    submission_time = datetime.datetime.utcnow().isoformat(' ', 'seconds')
     cursor.execute(f"""
-                    INSERT INTO tags (name)
-                    VALUES ('{message}')
+                    INSERT INTO comments (submission_time, question_id, answer_id, message) 
+                    VALUES ('{submission_time}','{question_id}', null,'{message}')
+""")
+
+@connection.connection_handler
+def post_comment_answer(cursor, answer_id, message):
+    submission_time = datetime.datetime.utcnow().isoformat(' ', 'seconds')
+    cursor.execute(f"""
+                    INSERT INTO comments (submission_time, question_id, answer_id, message) 
+                    VALUES ('{submission_time}',null, {answer_id},'{message}')
 """)
 
 @connection.connection_handler
@@ -117,6 +134,14 @@ def get_answer(cursor, answer_id):
     """)
     answer = cursor.fetchone()
     return answer
+
+@connection.connection_handler
+def get_answer_question_id(cursor, answer_id):
+    cursor.execute(f"""
+                    SELECT question_id FROM answers WHERE id = {answer_id}; 
+    """)
+    answer = cursor.fetchone()
+    return answer['question_id']
 
 
 @connection.connection_handler

@@ -33,6 +33,15 @@
         </div>
     {% endif %}
     <hr>
+        <h4>Comments:</h4>
+        {% if comments == [] %}
+        <p style="..."> There are no comments</p>
+        {% else %}
+            {% for comment in comments %}
+                <ul>{{comment['message']}} {{comment['submission_time']}}</ul>
+            {% endfor %}
+        {% endif %}
+    <hr>
 
     {% if answers == [] %}
         <p style="text-align: center">There are no answers at this time.</p>
