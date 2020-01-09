@@ -122,6 +122,25 @@ def get_comments_for_question_page(cursor, question_id, answer_id_list):
     comments = cursor.fetchall()
     return comments
 
+
+@connection.connection_handler
+def get_comment(cursor, comment_id):
+    cursor.execute(f"""
+                    SELECT * FROM comments WHERE id = {comment_id}; 
+    """)
+    answer = cursor.fetchall()
+    return answer
+
+
+@connection.connection_handler
+def update_comment(cursor, comment_id, message):
+    cursor.execute(f"""
+                    UPDATE comments
+                    SET message = '{message}'
+                    WHERE id = {comment_id};
+    """)
+
+
 @connection.connection_handler
 def post_answer(cursor, question_id, message, image=None):
     submission_time = datetime.datetime.utcnow().isoformat(' ', 'seconds')

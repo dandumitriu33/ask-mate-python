@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block head %}{% endblock head %}
+
+
+
+
+{% block body %}
+<h1>Edit comment</h1>
+
+{% for item in comment %}
+
+        <form action="{{ url_for('edit_comment', comment_id=comment_id) }}" method="POST">
+            <label for="message">Details:</label>
+            <textarea name="message" id="message" rows="6" cols="50" required>{{ item.message }}</textarea><br>
+            <!-- <input type="file" name="upload"> -->
+            <input type="submit" value="Edit" class="button">
+        </form>
+
+
+{% endfor %}
+
+{% endblock body %}

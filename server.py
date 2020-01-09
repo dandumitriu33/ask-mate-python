@@ -115,6 +115,7 @@ def question_new_answer(question_id):
         data_manager.post_answer(question_id, new_answer_message)
         return redirect(url_for('display_question', question_id=question_id))
 
+
 @app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
 def answer_new_comment(answer_id):
     if request.method == 'GET':
@@ -124,6 +125,34 @@ def answer_new_comment(answer_id):
         data_manager.post_comment_answer(answer_id, new_comment_mesage)
         question_id = data_manager.get_answer_question_id(answer_id)
         return redirect(url_for('display_question', question_id=question_id))
+
+
+@app.route('/comment/<comment_id>/edit', methods=['GET', 'POST'])
+def edit_comment(comment_id):
+    if request.method == 'GET':
+        comment = data_manager.get_comment(comment_id)
+        return render_template('edit-comment.html',
+                               comment_id=comment_id,
+                               comment=comment)
+    elif request.method == 'POST':
+        comment = data_manager.get_comment(comment_id)
+        if comment[0]['question_id']:
+            question_id = comment[0]['question_id']
+            edited_comment_message = request.form['message'].replace("'", "''")
+            data_manager.update_comment(comment_id, edited_comment_message)
+            return redirect(url_for('display_question',
+                                    question_id=question_id))
+        elif comment[0]['answer_id']:
+            answer_id = comment[0]['answer_id']
+            edited_comment_message = request.form['message'].replace("'", "''")
+            data_manager.update_comment(comment_id, edited_comment_message)
+            answer = data_manager.get_answer(answer_id)
+            question_id = answer['question_id']
+            return redirect(url_for('display_question',
+                                    question_id=question_id))
+
+
+
 
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
 def edit_answer(answer_id):
