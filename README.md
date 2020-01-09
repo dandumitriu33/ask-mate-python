@@ -1,5 +1,5 @@
 # Codecool Educational Project - ASK MATE
-Web and SQL with Python / 1st TW week / Ask Mate project
+Web and SQL with Python / 1st and 2nd TW week / Ask Mate project
 ## Description
 Small web project with a question and answer format. It is essentially an
  extremely simple Stack Overflow clone.  
@@ -10,9 +10,12 @@ Small web project with a question and answer format. It is essentially an
 - sort the questions on the main page, ascending and descending, by date posted,
 number of views, number of votes, question alphabetically and details alphabetically
 - upvote or downvote questions and answers
+- add/edit comments to questions and answers  
+Note: Not all features are available at this time.
 ## Installation
 This installation guide is made for the Ubuntu operating system. Other operating 
-systems have similar steps but please check the details on the web first.
+systems have similar steps but please check the details on the web first. Also Python
+3 is required and some operating systems don't have it by default.
 1. Clone the project on your computer
 
         sudo apt-get update
@@ -32,10 +35,7 @@ where you ran git clone)
         virtualenv venv
         source venv/bin/activate
         
-4. In the server.py file, please change the absolute path for the upload 
-folder - there are examples at the top
-
-5. Run the project on the given 0.0.0.0:5000 address
+4. Run the project on the given 0.0.0.0:5000 address
 
         python3 server.py
         

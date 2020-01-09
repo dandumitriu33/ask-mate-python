@@ -12,7 +12,6 @@ def get_new_five_questions(cursor):
     return questions
 
 
-
 @connection.connection_handler
 def get_all_questions(cursor, order_by='submission_time', order_direction='DESC'):
     order_dict = {
@@ -48,7 +47,6 @@ def get_answers_for_question(cursor, question_id):
     return answers
 
 
-
 @connection.connection_handler
 def post_question(cursor, title, message, image=None):
     submission_time = datetime.datetime.utcnow().isoformat(' ', 'seconds')
@@ -66,14 +64,29 @@ def post_question(cursor, title, message, image=None):
 @connection.connection_handler
 def delete_question(cursor, question_id):
 
-    # deletes answers, then the question
+    # grabs all the answers and then loops through them to delete their comments
 
     cursor.execute(f"""
-                    DELETE FROM answers
-                    WHERE question_id = {question_id};
-                    DELETE FROM questions
-                    WHERE id = {question_id};
-    """)
+                            SELECT * FROM answers WHERE question_id = {question_id} ORDER BY vote_number DESC;
+            """)
+    answers = cursor.fetchall()
+    for answer in answers:
+        answer_id = answer['id']
+        cursor.execute(f"""
+                                DELETE FROM comments 
+                                WHERE answer_id = {answer_id};
+                    """)
+
+    # deletes answers, then question comments, then the question
+
+    cursor.execute(f"""
+                        DELETE FROM answers
+                        WHERE question_id = {question_id};
+                        DELETE FROM comments 
+                        WHERE question_id = {question_id};
+                        DELETE FROM questions
+                        WHERE id = {question_id};
+        """)
 
 
 @connection.connection_handler
@@ -84,6 +97,7 @@ def update_question(cursor, question_id, title, message):
                     WHERE id = {question_id};
     """)
 
+
 @connection.connection_handler
 def get_comment_for_question(cursor, question_id):
     cursor.execute(f'''
@@ -91,6 +105,7 @@ def get_comment_for_question(cursor, question_id):
 ''')
     comment = cursor.fetchall()
     return comment
+
 
 @connection.connection_handler
 def post_comment_question(cursor, question_id, message):
@@ -100,6 +115,7 @@ def post_comment_question(cursor, question_id, message):
                     VALUES ('{submission_time}','{question_id}', null,'{message}')
 """)
 
+
 @connection.connection_handler
 def post_comment_answer(cursor, answer_id, message):
     submission_time = datetime.datetime.utcnow().isoformat(' ', 'seconds')
@@ -108,15 +124,37 @@ def post_comment_answer(cursor, answer_id, message):
                     VALUES ('{submission_time}',null, {answer_id},'{message}')
 """)
 
+
 @connection.connection_handler
 def get_comments_for_question_page(cursor, question_id, answer_id_list):
+    if not answer_id_list:
+        answer_id_list.append('0')
     answer_id_str = ', '.join(answer_id_list)
-    print(answer_id_str)
+
     cursor.execute(f"""
                     SELECT * FROM comments WHERE question_id = {question_id} OR answer_id IN ({answer_id_str});
 """)
     comments = cursor.fetchall()
     return comments
+
+
+@connection.connection_handler
+def get_comment(cursor, comment_id):
+    cursor.execute(f"""
+                    SELECT * FROM comments WHERE id = {comment_id}; 
+    """)
+    answer = cursor.fetchall()
+    return answer
+
+
+@connection.connection_handler
+def update_comment(cursor, comment_id, message):
+    cursor.execute(f"""
+                    UPDATE comments
+                    SET message = '{message}'
+                    WHERE id = {comment_id};
+    """)
+
 
 @connection.connection_handler
 def post_answer(cursor, question_id, message, image=None):

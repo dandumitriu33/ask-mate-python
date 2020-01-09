@@ -76,8 +76,10 @@ form li + li {
 }
 
 .question-main {
-    border-radius: 25px;
-    box-shadow: 3px 3px 3px black, -3px -3px 3px lightgray;
+    border-radius: 8px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    box-shadow: 3px 3px 3px black, inset 1px 1px 3px rgb(189,191,191); /*, -3px -3px 3px lightgray; */
     margin-top: 4%;
     margin-left: 5%;
     margin-right: 5%;
@@ -86,15 +88,21 @@ form li + li {
     color: rgb(227,230,230);
 }
 
+.vote-number {
+    color: lightgray;
+}
+
 .question-title {
     font-size: x-large;
     color: rgb(227,230,230);
 }
 
 .question_details{
-    border-radius: 25px;
-    box-shadow: 3px 3px 3px black, -3px -3px 3px lightgray;
-    margin-top: 2%;
+    border-radius: 8px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    box-shadow: 3px 3px 3px black, inset 1px 1px 3px rgb(189,191,191); /*, -3px -3px 3px lightgray; */
+    margin-top: 3px;
     margin-left: 5%;
     margin-right: 5%;
     padding: 5px 10px;
@@ -102,7 +110,7 @@ form li + li {
 }
 
 .question_answer {
-    border-radius: 25px;
+    border-radius: 8px;
     box-shadow: 3px 3px 3px black, -3px -3px 3px lightgray;
     margin-top: 2%;
     margin-left: 5%;
@@ -115,7 +123,7 @@ form li + li {
     background-color: rgb(86,87,87);
     font-size: x-large;
     padding: 5px 10px;
-    margin: 3px;
+    marginp: 3px;
     border-radius: 25px;
     box-shadow: 3px 3px 3px black, inset 1px 1px 3px rgb(189,191,191);
     color: rgb(227,230,230);
@@ -131,10 +139,23 @@ form li + li {
     color: rgb(227,230,230);
 }
 
+.action-button {
+    border: solid 1px rgb(129,129,133);
+    border-radius: 3px;
+    padding-left: 3px;
+    padding-right: 3px;
+    color: lightgray;
+    font-size: x-small;
+}
+
 .button:hover {
     background-color: gray;
 }
 
+.info-text {
+    color: lightgray;
+    font-size: x-small;
+}
 
 .text_container{
     margin-top: 3px;
@@ -178,4 +199,14 @@ input[type="text"], textarea {
     margin-top: 10px;
     padding-right: 7px;
     margin-right: 5%;
+}
+
+.info-page {
+    margin-left: 5%;
+    margin-right: 5%;
+    color: lightgray;
+}
+
+.info-page a {
+    color: black;
 }

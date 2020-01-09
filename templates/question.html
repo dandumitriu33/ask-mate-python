@@ -10,73 +10,77 @@
 
     <p style="text-align: center">
         <a href="/question/{{ question_id }}/vote-up"><img src="/static/up.png" alt="upvote arrow" height="12"></a>
-        {{ question.vote_number }}
+        <span class="vote-number">{{ question.vote_number }}</span>
         <a href="/question/{{ question_id }}/vote-down"><img src="/static/down.png" alt="downvote arrow" height="12"></a>
         <span>  </span><font size="5"><strong class="question-title">{{ question['title'] }}</strong></font><br>
 
-        <font size="1" color="#d3d3d3">Viewed {{ question['view_number'] }} times.
-        Submitted at: {{ question['submission_time'] }}</font>
+        <span class="info-text">Viewed {{ question['view_number'] }} times.
+        Submitted at: {{ question['submission_time'] }}</span>
 
-        <a href="/question/{{ question_id }}/edit"><font size="1" color="#d3d3d3">edit</font></a>
-        <a href="/question/{{ question_id }}/delete"><font size="1" color="#d3d3d3">delete</font></a>
-        <a href="/question/{{ question_id }}/new-comment"><font size="1" color="#d3d3d3">comment</font></a>
+        <a href="/question/{{ question_id }}/edit" class="action-button">edit</a>
+        <a href="/question/{{ question_id }}/delete" class="action-button">delete</font></a>
+        <a href="/question/{{ question_id }}/new-comment" class="action-button">comment</font></a>
 
     </p>
     <p class="question_details">
-        Details:<br>
+
         <br>
         {{ question['message'] }}<span>  </span>
-
     </p>
+    <!-- </p>
     {% if question['image'] != '' %}
         <div class="question_details">
             <a href="{{ question['image'] }}" target="_blank"><img src="{{ question['image'] }}" alt="Question related image"></a>
         </div>
-    {% endif %}
+    {% endif %} -->
     <div class="comments">
-        <h4>Comments:</h4>
+        <h4 class="info-text">Comments:</h4>
         {% if comments == [] %}
-        <p style="..."> There are no comments</p>
+        <p class="info-text"> There are no comments</p>
         {% else %}
             {% for comment in comments %}
                 {% if comment['question_id'] == question_id %}
-                    <ul>{{comment['message']}} {{comment['submission_time']}}</ul>
+                    <ul>{{comment['message']}}
+                        <a href="/comment/{{ comment['id'] }}/edit" class="action-button">edit</a>
+                    </ul>
                 {% endif %}
             {% endfor %}
         {% endif %}
     </div>
     {% if answers == [] %}
-        <p style="text-align: center">There are no answers at this time.</p>
+        <p class="info-text">There are no answers at this time.</p>
     {% else %}
         {% for answer in answers %}
 
                 <p class="question_details">
                     <a href="/answer/{{ answer['id'] }}/vote-up"><img src="/static/up.png" alt="upvote arrow" height="12"></a>
-                    {{ answer['vote_number'] }}
+                    <span class="vote-number">{{ answer['vote_number'] }}</span>
                     <a href="/answer/{{ answer['id'] }}/vote-down"><img src="/static/down.png" alt="downvote arrow" height="12"></a>
                     <span>  </span>
                     {{ answer['message'] }}<span>  </span>
-                    <span>Submitted at: {{ answer['submission_time'] }}
-                        <a href="/answer/{{ answer['id'] }}/edit">edit</a>
-                        <a href="{{ url_for('delete_answer', answer_id=answer['id']) }}">delete</a>
-                        <a href="/answer/{{ answer['id'] }}/new-comment">comment</a>
+                    <span class="info-text">Submitted at: {{ answer['submission_time'] }}
+                        <a href="/answer/{{ answer['id'] }}/edit" class="action-button">edit</a>
+                        <a href="{{ url_for('delete_answer', answer_id=answer['id']) }}" class="action-button">delete</a>
+                        <a href="/answer/{{ answer['id'] }}/new-comment" class="action-button">comment</a>
                     </span>
                 </p>
 
 
-            {% if answer['image'] != '' %}
+            <!-- {% if answer['image'] != '' %}
                 <div class="question_details">
                         <a href="{{ answer['image'] }}" target="_blank"><img src="{{ answer['image'] }}" alt="Answer related image"></a>
                 </div>
             {% endif %}
-            <br>
+            <br> -->
         <div class="comments">
 
             {% if comments %}
 
                 {% for comment in comments %}
                     {% if comment['answer_id'] == answer['id'] %}
-                        <ul>{{comment['message']}} {{comment['submission_time']}}</ul>
+                        <ul>{{comment['message']}}
+                            <a href="/comment/{{ comment['id'] }}/edit" class="action-button">edit</a>
+                        </ul>
                     {% endif %}
                 {% endfor %}
             {% endif %}
@@ -89,7 +93,7 @@
     {% endif %}
 
 
-    <a href="{{ url_for('question_new_answer', question_id=question_id) }}" class="reply-button">Reply</a>
+    <a href="{{ url_for('question_new_answer', question_id=question_id) }}" class="reply-button">Answer question</a>
 
 
 {% endblock body%}
