@@ -152,8 +152,6 @@ def edit_comment(comment_id):
                                     question_id=question_id))
 
 
-
-
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
 def edit_answer(answer_id):
     if request.method == 'GET':

@@ -64,14 +64,29 @@ def post_question(cursor, title, message, image=None):
 @connection.connection_handler
 def delete_question(cursor, question_id):
 
-    # deletes answers, then the question
+    # grabs all the answers and then loops through them to delete their comments
 
     cursor.execute(f"""
-                    DELETE FROM answers
-                    WHERE question_id = {question_id};
-                    DELETE FROM questions
-                    WHERE id = {question_id};
-    """)
+                            SELECT * FROM answers WHERE question_id = {question_id} ORDER BY vote_number DESC;
+            """)
+    answers = cursor.fetchall()
+    for answer in answers:
+        answer_id = answer['id']
+        cursor.execute(f"""
+                                DELETE FROM comments 
+                                WHERE answer_id = {answer_id};
+                    """)
+
+    # deletes answers, then question comments, then the question
+
+    cursor.execute(f"""
+                        DELETE FROM answers
+                        WHERE question_id = {question_id};
+                        DELETE FROM comments 
+                        WHERE question_id = {question_id};
+                        DELETE FROM questions
+                        WHERE id = {question_id};
+        """)
 
 
 @connection.connection_handler
