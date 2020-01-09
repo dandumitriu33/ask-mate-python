@@ -200,3 +200,13 @@ input[type="text"], textarea {
     padding-right: 7px;
     margin-right: 5%;
 }
+
+.info-page {
+    margin-left: 5%;
+    margin-right: 5%;
+    color: lightgray;
+}
+
+.info-page a {
+    color: black;
+}
