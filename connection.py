@@ -12,12 +12,12 @@ def get_connection_string():
     env_variables_defined = user_name and password and host and database_name
 
     if env_variables_defined:
-        return 'postgresql://{user_name}:{password}@{host}/{database_name}'.format(
-            user_name=user_name,
-            password=password,
-            host=host,
-            database_name=database_name
-        )
+        return f'postgresql://{user_name}:{password}@{host}/{database_name}'#.format(
+        #     user_name=user_name,
+        #     password=password,
+        #     host=host,
+        #     database_name=database_name
+        # )
     else:
         raise KeyError('Some necessary environment variable(s) are not defined')
 
