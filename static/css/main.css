@@ -1,6 +1,6 @@
 body, html {
     background-color: rgb(86,87,87);
-    font-family: "Ubuntu Mono";
+    font-family: sans-serif;
 }
 
 nav {
@@ -14,7 +14,7 @@ nav ul {
 }
 
 nav ul li {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 h1 {
@@ -63,6 +63,9 @@ form li + li {
 /* CLASSES */
 
 .nav-button {
+    display: block;
+    width: 20px;
+    text-align: center;
     background-color: rgb(86,87,87);
     font-size: x-large;
     padding: 5px 10px;
