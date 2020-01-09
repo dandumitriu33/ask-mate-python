@@ -1,11 +1,8 @@
 import unittest
 import data_manager
-import time
 
 
 class TestDataManager(unittest.TestCase):
-
-    # DELETE_QUESTION_ID = 0
 
     def test_get_all_questions(self):
         answer = data_manager.get_all_questions()

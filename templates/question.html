@@ -92,8 +92,8 @@
 
     {% endif %}
 
-
-    <a href="{{ url_for('question_new_answer', question_id=question_id) }}" class="reply-button">Answer question</a>
-
+    <div>
+        <a href="{{ url_for('question_new_answer', question_id=question_id) }}" class="reply-button">Answer question</a>
+    </div>
 
 {% endblock body%}

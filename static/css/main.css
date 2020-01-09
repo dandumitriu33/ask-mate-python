@@ -48,14 +48,6 @@ a:active {
     width: 96%;
 }
 
-form {
-    margin: 0 auto;
-    width: 400px;
-    padding: 1em;
-    border: 1px solid #CCC;
-    border-radius: 1em;
-}
-
 form li + li {
     margin-top: 1em;
 }
@@ -133,7 +125,9 @@ form li + li {
 }
 
 .reply-button {
-    margin-left: 65%;
+    margin-right: 5%;
+    float: right;
+
     background-color: rgb(86,87,87);
     font-size: x-large;
     padding: 5px 10px;
@@ -163,7 +157,7 @@ form li + li {
 .text_container{
     margin-top: 3px;
     margin-bottom: 3px;
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 .question_image {

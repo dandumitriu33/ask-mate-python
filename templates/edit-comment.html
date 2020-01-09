@@ -6,13 +6,13 @@
 
 
 {% block body %}
-<h1>Edit comment</h1>
+<h1>Edit comment {{ comment_id}}</h1>
 
 {% for item in comment %}
 
         <form action="{{ url_for('edit_comment', comment_id=comment_id) }}" method="POST">
-            <label for="message">Details:</label>
-            <textarea name="message" id="message" rows="6" cols="45" required>{{ item.message }}</textarea><br>
+            <label for="message">Comment:</label>
+            <textarea name="message" id="message" rows="6" cols="45" required class="text_container">{{ item.message }}</textarea><br>
             <!-- <input type="file" name="upload"> -->
             <input type="submit" value="Edit" class="button">
         </form>
