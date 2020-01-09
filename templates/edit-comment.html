@@ -12,7 +12,7 @@
 
         <form action="{{ url_for('edit_comment', comment_id=comment_id) }}" method="POST">
             <label for="message">Details:</label>
-            <textarea name="message" id="message" rows="6" cols="50" required>{{ item.message }}</textarea><br>
+            <textarea name="message" id="message" rows="6" cols="45" required>{{ item.message }}</textarea><br>
             <!-- <input type="file" name="upload"> -->
             <input type="submit" value="Edit" class="button">
         </form>
