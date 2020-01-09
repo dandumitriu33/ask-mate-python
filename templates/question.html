@@ -19,6 +19,7 @@
 
         <a href="/question/{{ question_id }}/edit"><font size="1" color="#d3d3d3">edit</font></a>
         <a href="/question/{{ question_id }}/delete"><font size="1" color="#d3d3d3">delete</font></a>
+        <a href="/question/{{ question_id }}/new-comment"><font size="1" color="#d3d3d3">comment</font></a>
 
     </p>
     <p class="question_details">
@@ -32,8 +33,18 @@
             <a href="{{ question['image'] }}" target="_blank"><img src="{{ question['image'] }}" alt="Question related image"></a>
         </div>
     {% endif %}
-    <hr>
-
+    <div class="comments">
+        <h4>Comments:</h4>
+        {% if comments == [] %}
+        <p style="..."> There are no comments</p>
+        {% else %}
+            {% for comment in comments %}
+                {% if comment['question_id'] == question_id %}
+                    <ul>{{comment['message']}} {{comment['submission_time']}}</ul>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
     {% if answers == [] %}
         <p style="text-align: center">There are no answers at this time.</p>
     {% else %}
@@ -48,6 +59,7 @@
                     <span>Submitted at: {{ answer['submission_time'] }}
                         <a href="/answer/{{ answer['id'] }}/edit">edit</a>
                         <a href="{{ url_for('delete_answer', answer_id=answer['id']) }}">delete</a>
+                        <a href="/answer/{{ answer['id'] }}/new-comment">comment</a>
                     </span>
                 </p>
 
@@ -58,6 +70,19 @@
                 </div>
             {% endif %}
             <br>
+        <div class="comments">
+
+            {% if comments %}
+
+                {% for comment in comments %}
+                    {% if comment['answer_id'] == answer['id'] %}
+                        <ul>{{comment['message']}} {{comment['submission_time']}}</ul>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+
+
         {% endfor %}
 
 

@@ -4,6 +4,16 @@ import util
 
 
 @connection.connection_handler
+def get_new_five_questions(cursor):
+    cursor.execute(f"""
+                    SELECT * FROM questions ORDER BY submission_time DESC LIMIT 5;
+    """)
+    questions = cursor.fetchall()
+    return questions
+
+
+
+@connection.connection_handler
 def get_all_questions(cursor, order_by='submission_time', order_direction='DESC'):
     order_dict = {
                 'submission_time': "SELECT * FROM questions ORDER BY submission_time ",
@@ -36,6 +46,7 @@ def get_answers_for_question(cursor, question_id):
     """)
     answers = cursor.fetchall()
     return answers
+
 
 
 @connection.connection_handler
@@ -73,6 +84,39 @@ def update_question(cursor, question_id, title, message):
                     WHERE id = {question_id};
     """)
 
+@connection.connection_handler
+def get_comment_for_question(cursor, question_id):
+    cursor.execute(f'''
+                    SELECT * FROM comments WHERE question_id = {question_id}
+''')
+    comment = cursor.fetchall()
+    return comment
+
+@connection.connection_handler
+def post_comment_question(cursor, question_id, message):
+    submission_time = datetime.datetime.utcnow().isoformat(' ', 'seconds')
+    cursor.execute(f"""
+                    INSERT INTO comments (submission_time, question_id, answer_id, message) 
+                    VALUES ('{submission_time}','{question_id}', null,'{message}')
+""")
+
+@connection.connection_handler
+def post_comment_answer(cursor, answer_id, message):
+    submission_time = datetime.datetime.utcnow().isoformat(' ', 'seconds')
+    cursor.execute(f"""
+                    INSERT INTO comments (submission_time, question_id, answer_id, message) 
+                    VALUES ('{submission_time}',null, {answer_id},'{message}')
+""")
+
+@connection.connection_handler
+def get_comments_for_question_page(cursor, question_id, answer_id_list):
+    answer_id_str = ', '.join(answer_id_list)
+    print(answer_id_str)
+    cursor.execute(f"""
+                    SELECT * FROM comments WHERE question_id = {question_id} OR answer_id IN ({answer_id_str});
+""")
+    comments = cursor.fetchall()
+    return comments
 
 @connection.connection_handler
 def post_answer(cursor, question_id, message, image=None):
@@ -100,6 +144,14 @@ def get_answer(cursor, answer_id):
     """)
     answer = cursor.fetchone()
     return answer
+
+@connection.connection_handler
+def get_answer_question_id(cursor, answer_id):
+    cursor.execute(f"""
+                    SELECT question_id FROM answers WHERE id = {answer_id}; 
+    """)
+    answer = cursor.fetchone()
+    return answer['question_id']
 
 
 @connection.connection_handler
