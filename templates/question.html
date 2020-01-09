@@ -40,7 +40,7 @@
         {% else %}
             {% for comment in comments %}
                 {% if comment['question_id'] == question_id %}
-                    <ul>{{comment['message']}} {{comment['submission_time']}}
+                    <ul>{{comment['message']}}
                         <a href="/comment/{{ comment['id'] }}/edit" class="action-button">edit</a>
                     </ul>
                 {% endif %}
@@ -78,7 +78,7 @@
 
                 {% for comment in comments %}
                     {% if comment['answer_id'] == answer['id'] %}
-                        <ul>{{comment['message']}} {{comment['submission_time']}}
+                        <ul>{{comment['message']}}
                             <a href="/comment/{{ comment['id'] }}/edit" class="action-button">edit</a>
                         </ul>
                     {% endif %}
