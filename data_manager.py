@@ -109,6 +109,16 @@ def post_comment_answer(cursor, answer_id, message):
 """)
 
 @connection.connection_handler
+def get_comments_for_question_page(cursor, question_id, answer_id_list):
+    answer_id_str = ', '.join(answer_id_list)
+    print(answer_id_str)
+    cursor.execute(f"""
+                    SELECT * FROM comments WHERE question_id = {question_id} OR answer_id IN ({answer_id_str});
+""")
+    comments = cursor.fetchall()
+    return comments
+
+@connection.connection_handler
 def post_answer(cursor, question_id, message, image=None):
     submission_time = datetime.datetime.utcnow().isoformat(' ', 'seconds')
     cursor.execute(f"""

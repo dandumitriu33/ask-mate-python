@@ -171,3 +171,11 @@ input[type="text"], textarea {
   background-color : #d1d1d1;
 
 }
+
+.comments{
+    text-align: right;
+    color: black;
+    margin-top: 10px;
+    padding-right: 7px;
+    margin-right: 5%;
+}

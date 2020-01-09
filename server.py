@@ -46,7 +46,11 @@ def display_question(question_id):
     question_id = int(question_id)
     question = data_manager.get_question(question_id)
     answers = data_manager.get_answers_for_question(question_id)
-    comments = data_manager.get_comment_for_question(question_id)
+    answer_id_list = []
+    for answer in answers:
+        answer_id_list.append(str(answer['id']))
+    # answer_id_set = set(answer_id_list)
+    comments = data_manager.get_comments_for_question_page(question_id, answer_id_list)
     return render_template('question.html',
                            question_id=question_id,
                            question=question,
