@@ -158,6 +158,7 @@ form li + li {
     margin-top: 3px;
     margin-bottom: 3px;
     border-radius: 8px;
+    width: 300px;
 }
 
 .question_image {
@@ -206,4 +207,15 @@ input[type="text"], textarea {
 
 .info-page a {
     color: black;
+}
+
+.main-form {
+    color: lightgray;
+    text-align: center;
+
+
+}
+
+form {
+    display: inline-block;
 }

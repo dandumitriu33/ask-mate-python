@@ -3,7 +3,7 @@ import psycopg2
 import psycopg2.extras
 
 
-DATABASE_URL = os.environ['DATABASE_URL']
+# DATABASE_URL = os.environ['DATABASE_URL']
 
 
 def get_connection_string():
@@ -29,9 +29,9 @@ def open_database():
     try:
 
         # lines commented out beacuse of different heroku deployment settings
-        # connection_string = get_connection_string()
-        # connection = psycopg2.connect(connection_string)
-        connection = psycopg2.connect(DATABASE_URL, sslmode='require')
+        connection_string = get_connection_string()
+        connection = psycopg2.connect(connection_string)
+        # connection = psycopg2.connect(DATABASE_URL, sslmode='require')
         connection.autocommit = True
     except psycopg2.DatabaseError as exception:
         print('Database connection problem')

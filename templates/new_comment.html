@@ -13,23 +13,29 @@
 
     <h1>New comment</h1>
     {% if answer_id %}
-        <form action="/answer/{{ answer_id }}/new-comment" method="POST">
-            <label>Answer {{ answer_id }}</label><br>
-            <input type="text" name="answer_id" value="{{ answer_id }}" disabled class="text_container"><br>
-            <label>New comment:</label><br>
-            <textarea name="message" rows="6" cols="45" class="text_container"></textarea>
-            <!-- <input type="file" name="file"> -->
-            <input type="submit" value="Post comment" class="button">
-        </form>
+        <div class="main-form">
+            <form action="/answer/{{ answer_id }}/new-comment" method="POST">
+                <label>Answer {{ answer_id }}</label><br>
+                <input type="text" name="answer_id" value="{{ answer_id }}" disabled class="text_container"><br>
+                <label>New comment:</label><br>
+                <textarea name="message" rows="6" cols="45" class="text_container"></textarea>
+                <!-- <input type="file" name="file"> -->
+                <br>
+                <input type="submit" value="Post comment" class="button">
+            </form>
+        </div>
     {% elif question_id %}
-        <form action="/question/{{ question_id }}/new-comment" method="POST">
-            <label>Question {{ question_id }}</label><br>
-            <input type="text" name="question_id" value="{{ question_id }}" disabled class="text_container"><br>
-            <label>New comment:</label><br>
-            <textarea name="message" rows="6" cols="45" class="text_container"></textarea>
-            <!-- <input type="file" name="file"> -->
-            <input type="submit" value="Post comment" class="button">
-        </form>
+        <div class="main-form">
+            <form action="/question/{{ question_id }}/new-comment" method="POST">
+                <label>Question {{ question_id }}</label><br>
+                <input type="text" name="question_id" value="{{ question_id }}" disabled class="text_container"><br>
+                <label>New comment:</label><br>
+                <textarea name="message" rows="6" cols="45" class="text_container"></textarea>
+                <!-- <input type="file" name="file"> -->
+                <br>
+                <input type="submit" value="Post comment" class="button">
+            </form>
+        </div>
     {% endif %}
 
 {% endblock %}

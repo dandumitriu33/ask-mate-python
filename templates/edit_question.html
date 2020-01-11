@@ -9,13 +9,15 @@
 
     <h1>ASK MATE</h1>
 
-    <form action="/question/{{ question_id }}/edit" method="POST">
-        <label>Question {{ question_id }}</label><br>
-        <input type="text" name="title" value={{ question.title }} class="text_container"><br>
-        <label>Details</label><br>
-        <textarea name="message" rows="6" cols="45" class="text_container">{{ question.message }}</textarea>
-        <input type="submit" value="Edit Question" class="button">
-    </form>
-
+    <div class="main-form">
+        <form action="/question/{{ question_id }}/edit" method="POST">
+            <label>Question {{ question_id }}</label><br>
+            <input type="text" name="title" value={{ question.title }} class="text_container"><br>
+            <label>Details</label><br>
+            <textarea name="message" rows="6" cols="45" class="text_container">{{ question.message }}</textarea>
+            <br>
+            <input type="submit" value="Edit Question" class="button">
+        </form>
+    </div>
 
 {% endblock body %}

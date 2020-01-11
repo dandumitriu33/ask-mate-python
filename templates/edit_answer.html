@@ -10,11 +10,13 @@
 
     <h1>ASK MATE</h1>
 
-    <form action="/answer/{{ answer_id }}/edit" method="POST">
-        <label>Edit Answer {{ answer_id }}</label><br>
-        <textarea name="message" rows="6" cols="45" class="text_container">{{ answer.message }}</textarea>
-        <input type="submit" value="Edit Answer" class="button">
-    </form>
-
+    <div class="main-form">
+        <form action="/answer/{{ answer_id }}/edit" method="POST">
+            <label>Edit Answer {{ answer_id }}</label><br>
+            <textarea name="message" rows="6" cols="45" class="text_container">{{ answer.message }}</textarea>
+            <br>
+            <input type="submit" value="Edit Answer" class="button">
+        </form>
+    </div>
 
 {% endblock body %}

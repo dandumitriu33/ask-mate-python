@@ -8,14 +8,16 @@
 
 <h1>ASK MATE</h1>
 
-    <form action="/add-question" method="POST">
-        <label>Question</label><br>
-        <input type="text" name="title" id="title" required="required" class="text_container"><br>
-        <label>Details</label><br>
-        <textarea name="message" rows="6" cols="45" required="required" class="text_container"></textarea><br>
-        <!-- <input type="file" name="file"> -->
-        <input type="submit" value="Post" class="button">
+    <div class="main-form">
+        <form action="/add-question" method="POST">
+            <label>Question</label><br>
+            <input type="text" name="title" id="title" required="required" class="text_container"><br>
+            <label>Details</label><br>
+            <textarea name="message" rows="6" cols="45" required="required" class="text_container"></textarea><br>
+            <!-- <input type="file" name="file"> -->
+            <input type="submit" value="Post" class="button">
     </form>
+    </div>
 
 
 {% endblock body%}
