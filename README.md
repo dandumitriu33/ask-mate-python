@@ -4,7 +4,7 @@ Web and SQL with Python / 1st and 2nd TW week / Ask Mate project
 ![alt text](static/img/demoreadmemd.jpg?raw=true)
 
 ## Quick look
-asklemons.herokuapp.com
+https://asklemons.herokuapp.com/
 
 
 
