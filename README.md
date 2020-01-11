@@ -1,5 +1,13 @@
 # Codecool Educational Project - ASK MATE
 Web and SQL with Python / 1st and 2nd TW week / Ask Mate project
+
+![alt text](static/img/demoreadmemd.jpg?raw=true)
+
+## Quick look
+asklemons.herokuapp.com
+
+
+
 ## Description
 Small web project with a question and answer format. It is essentially an
  extremely simple Stack Overflow clone.  
